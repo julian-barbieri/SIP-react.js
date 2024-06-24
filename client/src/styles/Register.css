@@ -1,0 +1,40 @@
+.registrarAdmin {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .registrarTitle {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .inputField {
+    width: 80%; /* Ancho reducido al 80% */
+    max-width: 300px; /* Ancho máximo para evitar que se extiendan demasiado */
+    margin: 0 auto; /* Centra horizontalmente */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: block;
+  }
+  
+  .registerButton {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .loginLink {
+    display: block;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #007bff;
+  }
+  .error-message{
+    color: red;
+  }
+  

@@ -1,0 +1,102 @@
+
+/* mapa.css */
+
+.container-mapa{
+  text-align: center;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+:root {
+  --numAncho: 0;
+  --numLargo: 0;
+}
+.cuadricula {
+  display: grid;
+  grid-template-columns: repeat(var(--numAncho), auto);
+  grid-template-rows: repeat(var(--numLargo), auto); /* Ancho de las columnas basado en el ancho */
+  justify-content: center;
+  gap: 4px; /* Espacio entre los cuadros */
+  align-content: stretch;
+  align-items: end;
+}
+
+.cuadro-blanco {
+  width: calc(5px * var(--numAncho)); /* Ancho de cada cuadro blanco */
+  height: calc(5px * var(--numLargo)); /* Alto de cada cuadro blanco */
+  background-color: white;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.numerosColumna {
+  color: black;
+  position: relative;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  /*center: 100%; /* Agrega esta línea para mover el texto hacia la izquierda */
+  justify-content: flex-start; /* Para alinear los elementos a la izquierda */
+  flex-direction: column;
+
+}
+
+.numerosFila {
+  color: black;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: fit-content; /* Para alinear los elementos a la izquierda */
+}
+
+
+.cuadro-seleccionado {
+  background-color: blue; /* Color cuando está seleccionado */
+}
+
+.entrada{
+  color: green;
+}
+
+.salida{
+  color: red;
+}
+
+.gondolaOcupada {
+  color: blue; /* Color cuando hay una góndola */
+}
+
+.idGondola {
+  color: blue;
+  font-weight: bold;
+  width: fit-content;
+}
+
+.titulos{
+  display: flex;
+  text-align: center;
+  justify-content: space-evenly;
+  
+}
+
+.gondolas {
+  /* Aplicar estilos de diseño flexbox */
+  display: grid;
+  /* Especificar el tamaño de la columna y el espacio entre elementos */
+  grid-template-columns: repeat(auto-fill, minmax(140px, 2fr));
+  gap: 5px; /* Espacio entre elementos */
+}
+
+li {
+  /* Agregar margen inferior entre elementos de la lista */
+  margin: 5px;
+  background-color: #f0f0f0;
+  list-style-type: none; /* Puedes ajustar este valor según sea necesario */
+}

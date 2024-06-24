@@ -1,0 +1,80 @@
+/* CreateSuper.css */
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 40%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.entradaSalidaButton{
+  background-color: #fff700f6;
+  color: #000000;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-top: 10px; 
+}
+.guardarButton {
+  text-align: center;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-top: 10px; 
+}
+
+.entradaSalidaButton:hover {
+  background-color: #def700;
+}
+.guardarButton:hover {
+  background-color: #0600b3;
+}
+
+/* Estilos para el enlace */
+.back-link {
+  font-size: 16px;
+  color: #007bff;
+  text-decoration: none;
+  margin-right: 20px;
+  margin-left: 25px;
+  text-align: left;
+  display: flex;
+  width: 5%;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+.button-container {
+  text-align: center; /* Centra el contenido horizontalmente */
+}
+
+.bold-text {
+  font-weight: bold;
+  color: black;
+}
