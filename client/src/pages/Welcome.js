@@ -16,7 +16,7 @@ function Welcome() {
   return (
     <div className='welcome-container'>
       <div className="top-bar">
-        <Link to={`/homeSuper/${nombre_usuario}`} className="back-link">
+        <Link to={`/app/${nombre_usuario}`} className="back-link">
           Volver
         </Link>
       </div>

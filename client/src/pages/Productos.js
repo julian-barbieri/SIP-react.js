@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 function Productos() {
 
   const [listOfProductos, setListOfProductos] = useState([]);
+  const [gondola, setGondola] = useState(false);
   const [busqueda, setBusqueda] = useState('');
   let { id } = useParams();
   let { nombre_usuario } = useParams();
@@ -15,6 +16,12 @@ function Productos() {
   useEffect(() => {
     axios.get(`http://localhost:3001/productos/bySuper/${id}`).then((response) => {
       setListOfProductos(response.data);
+    });
+    axios.get(`http://localhost:3001/gondolas/${id}`).then((response) => {
+      console.log(response.data.length);
+      if(response.data.length > 0) {
+        setGondola(true);
+      }
     });
   }, []);
   
@@ -76,7 +83,8 @@ function Productos() {
       <div className='titulo-producto'>
         Productos
       </div>
-      <div className='button-container'>
+      {gondola ? 
+        <><div className='button-container'>
         <button className='button-crear-producto' onClick={nuevoProducto}>
           Nuevo producto
         </button>
@@ -96,12 +104,15 @@ function Productos() {
               <div className="producto-nombre">{value.nombre}</div>
               <div className="producto-marca">{value.marca}</div>
               <div className="producto-categoria">{value.categoria}</div>
+              <div className={`producto-precioUnidad ${value.descuento > 0 ? 'precio-tachado' : ''}`}>
+                Precio x Unidad: $ {value.precioUnidad}
+              </div>
               {value.descuento > 0 && (
                 <div className="producto-conDescuento">
                   Descuento: $ {(value.precioUnidad * (1 - value.descuento / 100)).toFixed(2)} (-{value.descuento}%)
                 </div>
               )}
-              <div className="producto-precioUnidad">Precio x Unidad: $ {value.precioUnidad}</div>
+              
               {value.stock==false && (
                 <div className="producto-sinStock">
                   ¡Sin stock!
@@ -115,7 +126,9 @@ function Productos() {
             </div>
           </div>
         ))}
-      </div>
+      </div></> : 
+        <p>Creá al menos una góndola para crear productos.</p>}
+      
     </div>
   )
 }

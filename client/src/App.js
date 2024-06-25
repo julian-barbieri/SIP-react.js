@@ -26,8 +26,8 @@ function App() {
         <Routes>
           <Route path='/login' exact Component={Login}/>
           <Route path='/register' exact Component={Register}/>
-          <Route path='/homeSuper/:nombre_usuario' exact Component={HomeSuper}/>
-          <Route path='/homeSuper/:nombre_usuario/createSuper' exact Component={CreateSuper}/>
+          <Route path='/app/:nombre_usuario/*' exact Component={HomeSuper}/>
+          <Route path='/app/:nombre_usuario/createSuper' exact Component={CreateSuper}/>
           <Route path='/homeSuper/:nombre_usuario/createSuper/entradasalida/:ancho/:largo' exact Component={EntradaSalida}/>
           <Route path='/welcome/:id/:nombre_usuario' exact Component={Welcome}/>
           <Route path='/welcome/:id/:nombre_usuario/gondolas' exact Component={Gondolas}/>
@@ -39,8 +39,9 @@ function App() {
           <Route path='/welcome/:id/:nombre_usuario/producto/crear' exact Component={CrearProducto}/>
           <Route path='/welcome/:id/:nombre_usuario/producto/:producto_id' exact Component={EditarProducto}/>
           <Route path='/welcome/:id/:nombre_usuario/producto/crear/ubic' exact Component={UbicProducto}/>
+          
           {/* Ruta por defecto */}
-          <Route path='/*' element={<Navigate to="/login" />} />
+          <Route exact path="/" element={<Navigate replace to="/login" />} />
         </Routes>
       </Router>
     </div>

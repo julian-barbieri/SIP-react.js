@@ -23,7 +23,7 @@ function Login() {
       } else {
         setLoginError(false);
         // Redirige a la página del homeSuper
-        navigate(`/HomeSuper/${data.nombre_usuario}`);
+        navigate(`/app/${data.nombre_usuario}`);
       }
     } catch (error) {
       // Manejo de errores aquí
@@ -48,15 +48,37 @@ function Login() {
       )}
       <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
         <Form className='formLogin'>
-          <ErrorMessage name="nombre_usuario" component="span"></ErrorMessage>
-          <Field id="inputNombreUsuario" name="nombre_usuario" placeholder="Nombre usuario" className="inputField" />
+          
+          <ErrorMessage 
+            name="nombre_usuario" 
+            component="span">
+          </ErrorMessage>
 
-          <ErrorMessage name="contraseña" component="span"></ErrorMessage>
-          <Field id="inputContraseña" name="contraseña" placeholder="Contraseña" type="password" className="inputField" />
+          <Field 
+            id="inputNombreUsuario" 
+            name="nombre_usuario" 
+            placeholder="Nombre usuario" 
+            className="inputField" 
+          />
+
+          <ErrorMessage 
+            name="contraseña" 
+            component="span">
+          </ErrorMessage>
+
+          <Field 
+            id="inputContraseña" 
+            name="contraseña" 
+            placeholder="Contraseña" 
+            type="password" 
+            className="inputField"
+          />
           <button type='submit' className="loginButton">Login</button>
         </Form>
       </Formik>
-      <Link to="/register" className="registerLink">Register</Link>
+      <Link to="/register" className="registerLink">
+        Register
+      </Link>
     </div>
   )
 }

@@ -4,24 +4,35 @@ import Select from 'react-select';
 import axios from 'axios';
 import '../styles/HomeSuper.css';
 
+
 function HomeSuper() {
   const [supermercados, setSupermercados] = useState([]);
   const [admin, setAdmin] = useState({});
   let { nombre_usuario } = useParams();
-  let navigate = useNavigate();   
-  axios.get(`http://localhost:3001/administradores/adminByUsername/${nombre_usuario}`).then((response) => {
-    setAdmin(response.data);
-    return response.data;
-  }).then(async (admin) => {
-    await axios.get(`http://localhost:3001/supermercados/${admin.id}`).then((response) => {
-      // Transforma los supermercados en un array de objetos { value, label }
-      const supermercadosOptions = response.data.map((supermercado) => ({
-        value: supermercado.id, // Debes usar el identificador único del supermercado aquí
-        label: `${supermercado.nombre} - ${supermercado.direccion}`,
-    }));
-      setSupermercados(supermercadosOptions);
-    })
-  });
+  let navigate = useNavigate();
+  
+  useEffect(() => {
+    const fetchAdminAndSupermercados = async () => {
+      try {
+        // Solicitar datos del administrador
+        const adminResponse = await axios.get(`http://localhost:3001/administradores/adminByUsername/${nombre_usuario}`);
+        const adminData = adminResponse.data;
+        setAdmin(adminData);
+
+        // Solicitar supermercados basados en el ID del administrador
+        const supermercadosResponse = await axios.get(`http://localhost:3001/supermercados/${adminData.id}`);
+        const supermercadosOptions = supermercadosResponse.data.map((supermercado) => ({
+          value: supermercado.id,
+          label: `${supermercado.nombre} - ${supermercado.direccion}`,
+        }));
+        setSupermercados(supermercadosOptions);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchAdminAndSupermercados();
+  }, [nombre_usuario]);
 
   const handleContinue = (selectedOption) => {
     
@@ -38,6 +49,7 @@ function HomeSuper() {
 
   return (
     <div className='homeSuper'>
+ 
       <div className='titleHomeSuper'>
         Bienvenido al market list {nombre_usuario}
       </div>
@@ -48,7 +60,7 @@ function HomeSuper() {
           placeholder="Selecciona un supermercado"
         />
       </div>
-      <NavLink to={`/homeSuper/${nombre_usuario}/createSuper`} className="createSuperLink">
+      <NavLink to={`/app/${nombre_usuario}/createSuper/`} className="createSuperLink">
         Crea un supermercado
       </NavLink>
       <div className='buttonsContainer'>

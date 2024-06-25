@@ -100,3 +100,8 @@
     background-color: #dc3545;
   }
   
+  .precio-tachado {
+      text-decoration-line: line-through;
+      text-decoration-color: red;
+       /* Opcional: puedes cambiar el color para mayor claridad */
+  }

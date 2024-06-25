@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate} from 'react-router-dom';
 import '../styles/CreateSuper.css';
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+
+
 
 function CreateSuper() {
 
@@ -52,13 +54,13 @@ function CreateSuper() {
       timer: 2500
     });
     // Navegar a donde desees después de crear el supermercado
-    navigate(`/homeSuper/${nombre_usuario}`);
+    navigate(`/app/${nombre_usuario}`);
 
   }
   return (
     <div>
       <div className="top-bar">
-        <Link to={`/homeSuper/${nombre_usuario}`} className="back-link">
+        <Link to={`/app/${nombre_usuario}`} className="back-link">
           Volver
         </Link>
       </div>
