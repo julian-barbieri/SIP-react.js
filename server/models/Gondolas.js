@@ -30,6 +30,11 @@ module.exports = (sequelize, DataTypes) => {
       Gondolas.hasMany(models.Productos, {
         onDelete: "cascade",
       });
+      Gondolas.belongsTo(models.Supermercados, {
+        foreignKey: {
+            allowNull: false,
+        }
+    });
     }
     return Gondolas;
   };

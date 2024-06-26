@@ -33,6 +33,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       }
     });
+
+    Productos.associate = (models) => {
+      Productos.belongsTo(models.Gondolas, {
+          foreignKey: {
+              allowNull: false,
+          }
+      });
+    };
     
     return Productos;
   };
