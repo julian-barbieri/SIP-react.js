@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import '../styles/Gondolas.css'; 
 import Swal from 'sweetalert2';
+import axiosInstance from '../auth/axiosConfig.js';
+
 function Gondolas() {
   
   let navigate = useNavigate();
@@ -11,7 +13,7 @@ function Gondolas() {
   let { id } = useParams();
   let { nombre_usuario } = useParams();
   useEffect(() => {
-    axios.get(`http://localhost:3001/gondolas/${id}`).then((response) => {
+    axiosInstance.get(`http://localhost:3001/gondolas/${id}`).then((response) => {
       setListOfGondolas(response.data);
     });
   }, []);
@@ -37,7 +39,7 @@ function Gondolas() {
     }).then((result) => {
       if (result.isConfirmed) {
         try{
-          axios.delete(`http://localhost:3001/gondolas/${gondolaId}`);
+          axiosInstance.delete(`http://localhost:3001/gondolas/${gondolaId}`);
           // Recargar la lista de gondolas
           Swal.fire({
             title: "Eliminada!",

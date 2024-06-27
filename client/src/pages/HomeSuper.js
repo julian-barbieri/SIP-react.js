@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, NavLink } from 'react-router-dom';
 import Select from 'react-select';
-import axios from 'axios';
 import '../styles/HomeSuper.css';
-
+import axiosInstance from '../auth/axiosConfig.js';
 
 function HomeSuper() {
   const [supermercados, setSupermercados] = useState([]);
@@ -15,12 +14,12 @@ function HomeSuper() {
     const fetchAdminAndSupermercados = async () => {
       try {
         // Solicitar datos del administrador
-        const adminResponse = await axios.get(`http://localhost:3001/administradores/adminByUsername/${nombre_usuario}`);
+        const adminResponse = await axiosInstance.get(`http://localhost:3001/administradores/adminByUsername/${nombre_usuario}`);
         const adminData = adminResponse.data;
         setAdmin(adminData);
 
         // Solicitar supermercados basados en el ID del administrador
-        const supermercadosResponse = await axios.get(`http://localhost:3001/supermercados/${adminData.id}`);
+        const supermercadosResponse = await axiosInstance.get(`http://localhost:3001/supermercados/${adminData.id}`);
         const supermercadosOptions = supermercadosResponse.data.map((supermercado) => ({
           value: supermercado.id,
           label: `${supermercado.nombre} - ${supermercado.direccion}`,
@@ -44,8 +43,12 @@ function HomeSuper() {
   };
 
   const logout = () => {
-    window.location.replace('/login');
+    // Eliminar el token del local storage
+    localStorage.removeItem('token');
+    // Redirigir al usuario a la página de inicio de sesión
+    navigate('/login');
   };
+
 
   return (
     <div className='homeSuper'>

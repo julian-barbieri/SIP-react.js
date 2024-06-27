@@ -3,6 +3,7 @@ import CuadradoBlanco from '../componentes/CuadradoBlanco.js';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/MapaCompleto.css'
+import axiosInstance from '../auth/axiosConfig.js';
 
 function MapaCompleto() {
   const { id } = useParams();
@@ -18,10 +19,10 @@ function MapaCompleto() {
   // Parsear los valores de ancho y largo a números enteros
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/gondolas/${id}`).then((response) => {
+    axiosInstance.get(`http://localhost:3001/gondolas/${id}`).then((response) => {
       setGondolas(response.data); // Obtener la lista de góndolas desde el servidor
     });
-    axios.get(`http://localhost:3001/supermercados/superById/${id}`).then((response) => {
+    axiosInstance.get(`http://localhost:3001/supermercados/superById/${id}`).then((response) => {
       setNumLargo(response.data.largo);
       setNumAncho(response.data.ancho);
       setEntradax(response.data.entradax);

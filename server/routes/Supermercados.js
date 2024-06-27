@@ -1,22 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const { Supermercados, Gondolas, Productos } = require('../models');
+const authenticateJWT = require('../middlewares/authMiddleware');
 
 //crea supermercado
-router.post("/", async (req, res) =>{
+router.post("/",  authenticateJWT, async (req, res) =>{
     const Supermercado = req.body;
     await Supermercados.create(Supermercado);
     res.json(Supermercado);
 });
 
 //get all Supermercados
-router.get("/", async (req, res) =>{
+router.get("/",  authenticateJWT, async (req, res) =>{
     const listOfSupermercados = await Supermercados.findAll();
     res.json(listOfSupermercados);
 });
 
 // Obtener supermercados que tienen al menos un producto
-router.get("/with-products", async (req, res) =>{
+router.get("/with-products",  authenticateJWT, async (req, res) =>{
 
     try {
         const supermercadosConProductos = await Supermercados.findAll({
@@ -45,7 +46,7 @@ router.get("/with-products", async (req, res) =>{
 });
 
 //get by username del admin
-router.get("/:AdministradoreId", async (req, res) =>{
+router.get("/:AdministradoreId",  authenticateJWT, async (req, res) =>{
     const AdministradoreId = req.params.AdministradoreId;
     const supermercado = await Supermercados.findAll({ where: {AdministradoreId: AdministradoreId}});
     res.json(supermercado);
@@ -53,7 +54,7 @@ router.get("/:AdministradoreId", async (req, res) =>{
 
 
 //get by id
-router.get("/superById/:id", async (req, res) =>{
+router.get("/superById/:id",  authenticateJWT, async (req, res) =>{
     const id = req.params.id;
     const supermercado = await Supermercados.findOne({ where: { id:  id} });
     res.json(supermercado);

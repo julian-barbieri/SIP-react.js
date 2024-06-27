@@ -1,22 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const { Gondolas } = require('../models');
+const authenticateJWT = require('../middlewares/authMiddleware');
 
 //get all
-router.get("/", async (req, res) =>{
+router.get("/", authenticateJWT, async (req, res) =>{
     const listOfGondolas = await Gondolas.findAll();
     res.json(listOfGondolas);
 });
 
 //get gondolas by supermercadoId
-router.get("/:SupermercadoId", async (req, res) =>{
+router.get("/:SupermercadoId", authenticateJWT, async (req, res) =>{
     const SupermercadoId = req.params.SupermercadoId;
     const listOfGondolas = await Gondolas.findAll({where: {SupermercadoId: SupermercadoId}});
     res.json(listOfGondolas);
 });
 
 //EDITAR gondola
-router.put("/:id/editar", async (req, res) => {
+router.put("/:id/editar", authenticateJWT, async (req, res) => {
     const gondolaId = req.params.id;
     const updatedGondolaData = req.body; // Obtiene los datos actualizados del producto del cuerpo de la solicitud
     
@@ -44,7 +45,7 @@ router.put("/:id/editar", async (req, res) => {
   });
 
 //get gondolas by ID
-router.get("/id/:id", async (req, res) => {
+router.get("/id/:id", authenticateJWT, async (req, res) => {
     try {
         const gondolaId = req.params.id;
         const gondola = await Gondolas.findByPk(gondolaId);
@@ -60,14 +61,14 @@ router.get("/id/:id", async (req, res) => {
   });
 
 //crea gondola
-router.post("/", async (req, res) =>{
+router.post("/",  authenticateJWT, async (req, res) =>{
     const Gondola = req.body;
     await Gondolas.create(Gondola);
     res.json(Gondola);
 });
 
 // Eliminar góndola por ID
-router.delete("/:id", async (req, res) => {
+router.delete("/:id",  authenticateJWT, async (req, res) => {
     try {
         const gondolaId = req.params.id;
         const gondola = await Gondolas.findByPk(gondolaId);

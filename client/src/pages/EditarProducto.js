@@ -7,6 +7,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import Select from 'react-select';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import axiosInstance from '../auth/axiosConfig.js';
 
 function EditarProducto() {
     
@@ -36,7 +37,7 @@ function EditarProducto() {
   useEffect(() => {
 
     // Realizar una solicitud HTTP para obtener los detalles del producto
-    axios.get(`http://localhost:3001/productos/${producto_id}`)
+    axiosInstance.get(`http://localhost:3001/productos/${producto_id}`)
      .then(response => {
        //console.log(response.data);
        const producto = response.data;
@@ -54,7 +55,7 @@ function EditarProducto() {
          ubicExacta: producto.ubicExacta
        });
         // Realizar una solicitud HTTP para obtener la góndola by ID
-        axios.get(`http://localhost:3001/gondolas/id/${initialValues.GondolaId}`).then((response) => {
+        axiosInstance.get(`http://localhost:3001/gondolas/id/${initialValues.GondolaId}`).then((response) => {
             const gondola_select = response.data;
             setGondolaSelect({
                 id: gondola_select.id,
@@ -73,7 +74,7 @@ function EditarProducto() {
      });
 
     // Realizar una solicitud HTTP para obtener la lista de góndolas
-    axios.get(`http://localhost:3001/gondolas/${id}`).then((response) => {
+    axiosInstance.get(`http://localhost:3001/gondolas/${id}`).then((response) => {
       const gondolasOptions = response.data.map((gondola) => ({
         value: gondola.id, // Debes usar el identificador único de la gondola aquí
         key: `${gondola.categoria}`,
@@ -102,7 +103,7 @@ function EditarProducto() {
           ubicExacta: data.ubicExacta,
           GondolaId: data.GondolaId,
         };
-        const response = await axios.put(`http://localhost:3001/productos/${producto_id}/editar`, productoData);
+        const response = await axiosInstance.put(`http://localhost:3001/productos/${producto_id}/editar`, productoData);
         Swal.fire({
           position: "top",
           icon: "success",

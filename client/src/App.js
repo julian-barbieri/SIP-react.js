@@ -1,5 +1,6 @@
 import './App.css';
 import {BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import RutaProtegida from './auth/rutaProtegida.js';
 import logo from './logo.png';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -26,20 +27,73 @@ function App() {
         <Routes>
           <Route path='/login' exact Component={Login}/>
           <Route path='/register' exact Component={Register}/>
-          <Route path='/app/:nombre_usuario/*' exact Component={HomeSuper}/>
-          <Route path='/app/:nombre_usuario/createSuper' exact Component={CreateSuper}/>
-          <Route path='/homeSuper/:nombre_usuario/createSuper/entradasalida/:ancho/:largo' exact Component={EntradaSalida}/>
-          <Route path='/welcome/:id/:nombre_usuario' exact Component={Welcome}/>
-          <Route path='/welcome/:id/:nombre_usuario/gondolas' exact Component={Gondolas}/>
-          <Route path='/welcome/:id/:nombre_usuario/gondolas/crear' exact Component={CrearGondola}/>
-          <Route path='/welcome/:id/:nombre_usuario/gondolas/:gondola_id' exact Component={EditarGondola}/>
-          <Route path='/welcome/:id/:nombre_usuario/gondolas/crear/ubic' exact Component={UbicGondola}/>
-          <Route path='/welcome/:id/:nombre_usuario/mapa' exact Component={MapaCompleto}/>
-          <Route path='/welcome/:id/:nombre_usuario/producto' exact Component={Productos}/>
-          <Route path='/welcome/:id/:nombre_usuario/producto/crear' exact Component={CrearProducto}/>
-          <Route path='/welcome/:id/:nombre_usuario/producto/:producto_id' exact Component={EditarProducto}/>
-          <Route path='/welcome/:id/:nombre_usuario/producto/crear/ubic' exact Component={UbicProducto}/>
           
+          {/* Rutas protegidas */}
+          <Route path='/app/:nombre_usuario/*' element={
+            <RutaProtegida>
+              <HomeSuper />
+            </RutaProtegida>
+          } />
+          <Route path='/app/:nombre_usuario/createSuper' element={
+            <RutaProtegida>
+              <CreateSuper />
+            </RutaProtegida>
+          } />
+          <Route path='/homeSuper/:nombre_usuario/createSuper/entradasalida/:ancho/:largo' element={
+            <RutaProtegida>
+              <EntradaSalida />
+            </RutaProtegida>
+          } />
+          <Route path='/welcome/:id/:nombre_usuario' element={
+            <RutaProtegida>
+              <Welcome />
+            </RutaProtegida>
+          } />
+          <Route path='/welcome/:id/:nombre_usuario/gondolas' element={
+            <RutaProtegida>
+              <Gondolas />
+            </RutaProtegida>
+          } />
+          <Route path='/welcome/:id/:nombre_usuario/gondolas/crear' element={
+            <RutaProtegida>
+              <CrearGondola />
+            </RutaProtegida>
+          } />
+          <Route path='/welcome/:id/:nombre_usuario/gondolas/:gondola_id' element={
+            <RutaProtegida>
+              <EditarGondola />
+            </RutaProtegida>
+          } />
+          <Route path='/welcome/:id/:nombre_usuario/gondolas/crear/ubic' element={
+            <RutaProtegida>
+              <UbicGondola />
+            </RutaProtegida>
+          } />
+          <Route path='/welcome/:id/:nombre_usuario/mapa' element={
+            <RutaProtegida>
+              <MapaCompleto />
+            </RutaProtegida>
+          } />
+          <Route path='/welcome/:id/:nombre_usuario/producto' element={
+            <RutaProtegida>
+              <Productos />
+            </RutaProtegida>
+          } />
+          <Route path='/welcome/:id/:nombre_usuario/producto/crear' element={
+            <RutaProtegida>
+              <CrearProducto />
+            </RutaProtegida>
+          } />
+          <Route path='/welcome/:id/:nombre_usuario/producto/:producto_id' element={
+            <RutaProtegida>
+              <EditarProducto />
+            </RutaProtegida>
+          } />
+          <Route path='/welcome/:id/:nombre_usuario/producto/crear/ubic' element={
+            <RutaProtegida>
+              <UbicProducto />
+            </RutaProtegida>
+          } />
           {/* Ruta por defecto */}
           <Route exact path="/" element={<Navigate replace to="/login" />} />
         </Routes>
