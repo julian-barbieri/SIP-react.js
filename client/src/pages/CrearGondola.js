@@ -4,7 +4,7 @@ import '../styles/CrearGondola.css';
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import MapaCompleto from './MapaCompleto.js';
-import axios from 'axios';
+import axiosInstance from '../auth/axiosConfig.js';
 import Swal from 'sweetalert2';
 
 function CrearGondola() {
@@ -34,7 +34,7 @@ function CrearGondola() {
             SupermercadoId: id,
         };
         
-        const response = await axios.post(`http://localhost:3001/gondolas`, gondolaData);
+        const response = await axiosInstance.post(`http://localhost:3001/gondolas`, gondolaData);
         Swal.fire({
           position: "top",
           icon: "success",

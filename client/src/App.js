@@ -80,9 +80,7 @@ function App() {
             </RutaProtegida>
           } />
           <Route path='/welcome/:id/:nombre_usuario/producto/crear' element={
-            <RutaProtegida>
               <CrearProducto />
-            </RutaProtegida>
           } />
           <Route path='/welcome/:id/:nombre_usuario/producto/:producto_id' element={
             <RutaProtegida>

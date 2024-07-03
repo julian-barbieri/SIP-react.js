@@ -13,7 +13,7 @@ router.get("/", authenticateJWT, async (req, res) =>{
 });
 
 //get by username
-router.get("/adminByUsername/:nombre_usuario", authenticateJWT, async (req, res) =>{
+router.get("/adminByUsername/:nombre_usuario", async (req, res) =>{
     const nombre_usuario = req.params.nombre_usuario;
     const admin = await Administradores.findOne({ where: { nombre_usuario:  nombre_usuario} });
     res.json(admin);
@@ -77,5 +77,37 @@ router.post("/", async (req, res) =>{
     await Administradores.create(Administrador);
     res.json(Administrador);
 })
+
+// Ruta DELETE para eliminar un Administrador
+router.delete('/:nombre_usuario', authenticateJWT, async (req, res) => {
+    const nombre_usuario = req.params.nombre_usuario;
+
+    try {
+        // Busca el usuario por nombre de usuario
+        const administrador = await Administradores.findOne({
+            where: {
+                nombre_usuario: nombre_usuario
+            }
+        });
+
+        // Si no se encuentra el usuario, envía un mensaje de error
+        if (!administrador) {
+            return res.status(404).send("Administrador no encontrado");
+        }
+
+        // Elimina el usuario
+        await Administradores.destroy({
+            where: {
+                nombre_usuario: nombre_usuario
+            }
+        });
+
+        res.status(200).send("Administrador eliminado correctamente");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error del servidor");
+    }
+});
+
 
 module.exports = router

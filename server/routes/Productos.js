@@ -4,7 +4,7 @@ const { Productos, Gondolas } = require('../models');
 const authenticateJWT = require('../middlewares/authMiddleware');
 
 // Obtener producto por ID
-router.get("/:id", authenticateJWT, async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
       const productId = req.params.id;
       const producto = await Productos.findByPk(productId);
@@ -27,7 +27,7 @@ router.get("/", authenticateJWT, async (req, res) =>{
 });
 
 //get productos by supermercado
-router.get("/bySuper/:SupermercadoId", authenticateJWT, async (req, res) =>{
+router.get("/bySuper/:SupermercadoId", async (req, res) =>{
     const SupermercadoId = req.params.SupermercadoId;
     const listOfGondolas = await Gondolas.findAll({where: {SupermercadoId: SupermercadoId}});
     const productos = await Productos.findAll({
@@ -39,7 +39,7 @@ router.get("/bySuper/:SupermercadoId", authenticateJWT, async (req, res) =>{
 
 //update producto
 
-router.put("/:id/editar", authenticateJWT, async (req, res) => {
+router.put("/:id/editar", async (req, res) => {
   const productId = req.params.id;
   const updatedProductData = req.body; // Obtiene los datos actualizados del producto del cuerpo de la solicitud
   
@@ -88,7 +88,7 @@ router.put("/:id/eliminarstock", authenticateJWT, async (req, res) => {
     }
   });
   
-  router.put("/:id/agregarstock", async (req, res) => {
+  router.put("/:id/agregarstock", authenticateJWT, async (req, res) => {
     const productId = req.params.id;
     try {
       const producto = await Productos.findByPk(productId);
@@ -105,7 +105,7 @@ router.put("/:id/eliminarstock", authenticateJWT, async (req, res) => {
     }
   });
 
-//crea supermercado
+//crea producto
 router.post("/", authenticateJWT, async (req, res) =>{
     const Producto = req.body;
     await Productos.create(Producto);

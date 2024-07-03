@@ -3,7 +3,6 @@ import { Link, RedirectFunction } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import '../styles/Register.css';
 import * as Yup from 'yup';
-import axios from 'axios';
 import axiosInstance from '../auth/axiosConfig.js';
 
 function Register() {
