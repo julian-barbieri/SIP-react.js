@@ -15,6 +15,7 @@ export default function ListaProductos({ supermercadoId }) {
   const [listaProductos, setListaProductos] = useState([]);
   const [search, setSearch] = useState(""); // Estado para el término de búsqueda
   const [productosSeleccionados, setProductosSeleccionados] = useState([]);
+  const [limitOfProducts, setLimitOfProducts] = useState(3);
 
   useEffect(() => {
     axios
@@ -54,11 +55,11 @@ export default function ListaProductos({ supermercadoId }) {
     // Verificar si el producto ya está en la lista de productos seleccionados
     if (
       !productosSeleccionados.some((selected) => selected.id === item.id) &&
-      productosSeleccionados.length < 5 // Límite de 5 productos
+      productosSeleccionados.length < limitOfProducts // Límite de 5 productos
     ) {
       setProductosSeleccionados([...productosSeleccionados, item]);
-    } else if (productosSeleccionados.length >= 5) {
-      alert("Máximo 5 productos");
+    } else if (productosSeleccionados.length >= limitOfProducts) {
+      alert("Máximo " + limitOfProducts + " productos");
     }
   };
 

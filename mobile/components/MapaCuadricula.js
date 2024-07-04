@@ -1,39 +1,30 @@
+// MapaCuadricula.js
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import ubicGondolaSeleccionada from "./PathFinding.js/ubicGondolaSeleccionada";
 import encontrarCamino from "./PathFinding.js/encontrarCamino";
 
 export default function MapaCuadricula({
-  numAncho,
-  numLargo,
-  entradax,
-  entraday,
-  salidax,
-  saliday,
-  gondolas,
-  productosSeleccionados,
+  numAncho,  // Número de columnas
+  numLargo,  // Número de filas
+  entradax,  // Posición X de la entrada
+  entraday,  // Posición Y de la entrada
+  salidax,   // Posición X de la salida
+  saliday,   // Posición Y de la salida
+  gondolas,  // Lista de góndolas con sus ubicaciones
+  productosSeleccionados,  // Productos seleccionados para mostrar en el mapa
 }) {
   const [grid, setGrid] = useState([]);
 
-  // Inicializa tu cuadrícula con celdas libres
+  // Inicializa la cuadrícula y marca las celdas ocupadas por góndolas
   useEffect(() => {
-    const initialGrid = Array(numLargo)
-      .fill()
-      .map(() => Array(numAncho).fill({ occupied: false }));
-    setGrid(initialGrid);
+    // Crea una cuadrícula inicial vacía
+    const initialGrid = Array(numLargo).fill().map(() => Array(numAncho).fill({ occupied: false }));
 
-    // Marca las celdas ocupadas por góndolas según tu base de datos
+    // Marca las celdas ocupadas por góndolas
     gondolas.forEach((gondola) => {
-      for (
-        let row = gondola.ubicaciony;
-        row < gondola.ubicaciony + gondola.largo;
-        row++
-      ) {
-        for (
-          let col = gondola.ubicacionx;
-          col < gondola.ubicacionx + gondola.ancho;
-          col++
-        ) {
+      for (let row = gondola.ubicaciony; row < gondola.ubicaciony + gondola.largo; row++) {
+        for (let col = gondola.ubicacionx; col < gondola.ubicacionx + gondola.ancho; col++) {
           initialGrid[row][col] = { occupied: true };
         }
       }
@@ -42,60 +33,66 @@ export default function MapaCuadricula({
     setGrid(initialGrid);
   }, [numLargo, numAncho, gondolas]);
 
+  // Calcula el estilo para el círculo que indica la ubicación exacta de un producto en una góndola
   function calculateCirclePosition(ubicExacta) {
     const circleStyle = {
       position: "absolute",
       width: 15,
       height: 15,
       borderRadius: 7.5,
-      backgroundColor: "#4a90e2", // Azul suave
+      backgroundColor: "#4a90e2", // Azul suave por defecto
       alignItems: "center",
       justifyContent: "center",
     };
+    
+    // Ajusta el estilo según la ubicación exacta
     switch (ubicExacta) {
       case "derecha":
         circleStyle.borderRadius = 0;
         circleStyle.right = 0;
         circleStyle.top = 2.5;
-        circleStyle.height= "80%",
-        circleStyle.width= 8;
-        circleStyle.backgroundColor = '#fd7e14';
+        circleStyle.height = "80%";
+        circleStyle.width = 8;
+        circleStyle.backgroundColor = '#fd7e14'; // Naranja
         break;
       case "izquierda":
         circleStyle.borderRadius = 0;
         circleStyle.left = 0;
         circleStyle.top = 2.5;
-        circleStyle.height= "80%",
-        circleStyle.width= 8;
-        circleStyle.backgroundColor = '#fd7e14';
+        circleStyle.height = "80%";
+        circleStyle.width = 8;
+        circleStyle.backgroundColor = '#fd7e14'; // Naranja
         break;
       case "arriba":
         circleStyle.borderRadius = 0;
         circleStyle.top = 0;
         circleStyle.right = 2.5;
-        circleStyle.height= 8,
-        circleStyle.width= "80%";
-        circleStyle.backgroundColor = '#fd7e14';
+        circleStyle.height = 8;
+        circleStyle.width = "80%";
+        circleStyle.backgroundColor = '#fd7e14'; // Naranja
         break;
       case "abajo":
         circleStyle.borderRadius = 0;
         circleStyle.bottom = 0;
         circleStyle.right = 2.5;
-        circleStyle.height= 8,
-        circleStyle.width= "80%";
-        circleStyle.backgroundColor = '#fd7e14';
+        circleStyle.height = 8;
+        circleStyle.width = "80%";
+        circleStyle.backgroundColor = '#fd7e14'; // Naranja
         break;
     }
 
     return circleStyle;
   }
 
+  // Renderiza una fila de la cuadrícula
   const renderFila = (fila) => {
     const cuadros = [];
 
     for (let columna = 0; columna < numAncho; columna++) {
       const esEntrada = fila === entraday && columna === entradax;
       const esSalida = fila === saliday && columna === salidax;
+
+      // Determina si la celda actual está ocupada por una góndola
       const gondolaOcupada = gondolas.find((gondola) => {
         return (
           fila >= gondola.ubicaciony &&
@@ -105,68 +102,71 @@ export default function MapaCuadricula({
         );
       });
 
+      // Define el estilo del cuadro según su tipo
       const estiloCuadro = {
         ...styles.cuadro,
         backgroundColor: esEntrada
-          ? "#4caf50" // Verde suave para entrada
+          ? "#4caf50" // Verde para entrada
           : esSalida
-          ? "#cd5c5c" // Rojo suave para salida
+          ? "#cd5c5c" // Rojo para salida
           : gondolaOcupada
-          ? "#fedb41" // Amarillo suave para góndolas
-          : "white",
+          ? "#fedb41" // Amarillo para góndolas
+          : "white",  // Blanco para celdas libres
       };
 
+      // Verifica si la celda es la última en la derecha, izquierda, arriba o abajo de una góndola
       const isLastRightCell =
-      gondolaOcupada &&
-      columna === gondolaOcupada.ubicacionx + gondolaOcupada.ancho - 1 &&
-      fila >= gondolaOcupada.ubicaciony &&
-      fila < gondolaOcupada.ubicaciony + gondolaOcupada.largo;
+        gondolaOcupada &&
+        columna === gondolaOcupada.ubicacionx + gondolaOcupada.ancho - 1 &&
+        fila >= gondolaOcupada.ubicaciony &&
+        fila < gondolaOcupada.ubicaciony + gondolaOcupada.largo;
 
       const isLastLeftCell =
-      gondolaOcupada &&
-      columna === gondolaOcupada.ubicacionx &&
-      fila >= gondolaOcupada.ubicaciony &&
-      fila < gondolaOcupada.ubicaciony + gondolaOcupada.largo;
+        gondolaOcupada &&
+        columna === gondolaOcupada.ubicacionx &&
+        fila >= gondolaOcupada.ubicaciony &&
+        fila < gondolaOcupada.ubicaciony + gondolaOcupada.largo;
 
       const isLastTopCell =
-      gondolaOcupada &&
-      fila === gondolaOcupada.ubicaciony &&
-      columna >= gondolaOcupada.ubicacionx &&
-      columna < gondolaOcupada.ubicacionx + gondolaOcupada.ancho;
+        gondolaOcupada &&
+        fila === gondolaOcupada.ubicaciony &&
+        columna >= gondolaOcupada.ubicacionx &&
+        columna < gondolaOcupada.ubicacionx + gondolaOcupada.ancho;
 
       const isLastBottomCell =
-      gondolaOcupada &&
-      fila === gondolaOcupada.ubicaciony + gondolaOcupada.largo - 1 &&
-      columna >= gondolaOcupada.ubicacionx &&
-      columna < gondolaOcupada.ubicacionx + gondolaOcupada.ancho;
+        gondolaOcupada &&
+        fila === gondolaOcupada.ubicaciony + gondolaOcupada.largo - 1 &&
+        columna >= gondolaOcupada.ubicacionx &&
+        columna < gondolaOcupada.ubicacionx + gondolaOcupada.ancho;
 
       cuadros.push(
         <View key={`${fila}-${columna}`} style={estiloCuadro}>
+          {/* Muestra el camino si está presente y no hay góndola o entrada en la celda */}
           {!gondolaOcupada && !esEntrada && camino && camino.some(([x, y]) => x === columna && y === fila) ? (
             <View style={styles.camino}></View>
           ) : null}
 
+          {/* Muestra los productos seleccionados en la celda correcta */}
           {productosSeleccionados.map((producto) => {
             if (
-                gondolaOcupada && 
-                producto.GondolaId === gondolaOcupada.id
-              ) {
-                if(                
-                  (producto.ubicExacta === "derecha" && isLastRightCell) ||
-                  (producto.ubicExacta === "izquierda" && isLastLeftCell) ||
-                  (producto.ubicExacta === "arriba" && isLastTopCell) ||
-                  (producto.ubicExacta === "abajo" && isLastBottomCell)){
-                  return (
-                    <View
-                      key={producto.id}
-                      style={calculateCirclePosition(producto.ubicExacta)}
-                    >
-                      <Text style={styles.numProd}></Text>
-                    </View>
-                  );
-                }
+              gondolaOcupada && 
+              producto.GondolaId === gondolaOcupada.id &&
+              (
+                (producto.ubicExacta === "derecha" && isLastRightCell) ||
+                (producto.ubicExacta === "izquierda" && isLastLeftCell) ||
+                (producto.ubicExacta === "arriba" && isLastTopCell) ||
+                (producto.ubicExacta === "abajo" && isLastBottomCell)
+              )
+            ) {
+              return (
+                <View
+                  key={producto.id}
+                  style={calculateCirclePosition(producto.ubicExacta)}
+                >
+                  <Text style={styles.numProd}></Text>
+                </View>
+              );
             }
-
             return null;
           })}
         </View>
@@ -176,6 +176,7 @@ export default function MapaCuadricula({
     return cuadros;
   };
 
+  // Renderiza la cuadrícula completa
   const renderCuadricula = () => {
     const filas = [];
 
@@ -190,6 +191,7 @@ export default function MapaCuadricula({
     return filas;
   };
 
+  // Encuentra el camino desde la entrada hasta el primer producto seleccionado
   const camino = encontrarCamino(
     entradax,
     entraday,

@@ -8,6 +8,7 @@ export default function SuperList() {
   const [superCompleto, setSuperCompleto] = useState([]);
   const navigation = useNavigation();
 
+  //devuelve la lista de supermercados con productos
   useEffect(() => {
     axios
       .get(`http://192.168.0.117:3001/supermercados/with-products`)

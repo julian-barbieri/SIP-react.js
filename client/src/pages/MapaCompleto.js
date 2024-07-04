@@ -112,13 +112,13 @@ function MapaCompleto() {
         <h4 className='salida'>Salida</h4>
         <h4 className='gondolaOcupada'>Góndolas</h4>
       </div>
+      <div className="cuadricula">
+        {renderCuadros()}
+      </div>
       <div className='gondolas'>
         {gondolas.map(gondola => (
           <li key={gondola.id}>{gondola.codigo}: {gondola.categoria}</li>
         ))}
-      </div>
-      <div className="cuadricula">
-        {renderCuadros()}
       </div>
     </div>
   );
