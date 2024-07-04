@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Productos, Gondolas } = require('../models');
+const authenticateJWT = require('../middlewares/authMiddleware');
 
 // Obtener producto por ID
 router.get("/:id", async (req, res) => {
@@ -20,7 +21,7 @@ router.get("/:id", async (req, res) => {
 });
 
 //get all
-router.get("/", async (req, res) =>{
+router.get("/", authenticateJWT, async (req, res) =>{
     const listOfProductos = await Productos.findAll();
     res.json(listOfProductos);
 });
@@ -70,7 +71,7 @@ router.put("/:id/editar", async (req, res) => {
 
 //producto sin stock 
 
-router.put("/:id/eliminarstock", async (req, res) => {
+router.put("/:id/eliminarstock", authenticateJWT, async (req, res) => {
     const productId = req.params.id;
     try {
       const producto = await Productos.findByPk(productId);
@@ -87,7 +88,7 @@ router.put("/:id/eliminarstock", async (req, res) => {
     }
   });
   
-  router.put("/:id/agregarstock", async (req, res) => {
+  router.put("/:id/agregarstock", authenticateJWT, async (req, res) => {
     const productId = req.params.id;
     try {
       const producto = await Productos.findByPk(productId);
@@ -104,8 +105,8 @@ router.put("/:id/eliminarstock", async (req, res) => {
     }
   });
 
-//crea supermercado
-router.post("/", async (req, res) =>{
+//crea producto
+router.post("/", authenticateJWT, async (req, res) =>{
     const Producto = req.body;
     await Productos.create(Producto);
     res.json(Producto);

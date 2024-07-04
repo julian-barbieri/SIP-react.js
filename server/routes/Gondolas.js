@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { Gondolas } = require('../models');
+const authenticateJWT = require('../middlewares/authMiddleware');
 
 //get all
-router.get("/", async (req, res) =>{
+router.get("/", authenticateJWT, async (req, res) =>{
     const listOfGondolas = await Gondolas.findAll();
     res.json(listOfGondolas);
 });

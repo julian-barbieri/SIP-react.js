@@ -3,7 +3,7 @@ import { Link, RedirectFunction } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import '../styles/Register.css';
 import * as Yup from 'yup';
-import axios from 'axios';
+import axiosInstance from '../auth/axiosConfig.js';
 
 function Register() {
   const [usuarioExiste, setUsuarioExiste] = useState(false);
@@ -17,7 +17,7 @@ function Register() {
       try {
         // Verifica si el usuario ya existe
         console.log(data.nombre_usuario);
-        const response = await axios.get(`http://localhost:3001/administradores/adminByUsername/${data.nombre_usuario}`, data);
+        const response = await axiosInstance.get(`http://localhost:3001/administradores/adminByUsername/${data.nombre_usuario}`, data);
         console.log(response);
         if (response.data !== null) {
           // Usuario existe, establece usuarioExiste en true
@@ -25,7 +25,7 @@ function Register() {
         } else {
           setUsuarioExiste(false);
           // Usuario no existe, procede con el registro
-          await axios.post("http://localhost:3001/administradores", data);
+          await axiosInstance.post("http://localhost:3001/administradores", data);
           // Redirige a la página de inicio de sesión
           window.location.replace('/login');
         } }

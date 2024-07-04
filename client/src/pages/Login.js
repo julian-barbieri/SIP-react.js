@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import '../styles/Login.css';
 import * as Yup from 'yup';
-import axios from 'axios';
+import axiosInstance from '../auth/axiosConfig.js';
 
 function Login() {
   const initialValues = {
@@ -13,21 +13,42 @@ function Login() {
 
   let navigate = useNavigate();
   const [loginError, setLoginError] = useState(false);
+  const [username, setUsername] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para verificar si el usuario está autenticado
+
+  useEffect(() => {
+    // Verificar si el usuario está autenticado (simulación)
+    const checkAuthentication = () => {
+      const token = localStorage.getItem('token'); // Obtener el token del almacenamiento local
+      // Simular lógica de autenticación basada en el token (puedes ajustar esto según tu implementación real)
+      if (token) {
+        setIsLoggedIn(true); // El usuario está autenticado
+      } else {
+        setIsLoggedIn(false); // El usuario no está autenticado
+      }
+    };
+    checkAuthentication(); // Llamar a la función de verificación al montar el componente
+  }, []);
+
+  
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post("http://localhost:3001/administradores/login", data);
-      if (response.data === null) {
-        // Usuario y/o contraseña incorrectos
-        setLoginError(true);
-      } else {
+      const response = await axiosInstance.post("http://localhost:3001/administradores/login", data);
+      if (response.data.token) {
+        // Almacena el token JWT en el almacenamiento local
+        localStorage.setItem("token", response.data.token);
         setLoginError(false);
+        setUsername(data.nombre_usuario);
         // Redirige a la página del homeSuper
         navigate(`/app/${data.nombre_usuario}`);
+      } else {
+        setLoginError(true);
       }
     } catch (error) {
       // Manejo de errores aquí
       console.error(error);
+      setLoginError(true);
     }
   }
 

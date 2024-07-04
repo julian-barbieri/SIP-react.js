@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { Supermercados, Gondolas, Productos } = require('../models');
+const authenticateJWT = require('../middlewares/authMiddleware');
 
 //crea supermercado
-router.post("/", async (req, res) =>{
+router.post("/",  authenticateJWT, async (req, res) =>{
     const Supermercado = req.body;
     await Supermercados.create(Supermercado);
     res.json(Supermercado);

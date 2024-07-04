@@ -6,6 +6,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import MapaCompleto from './MapaCompleto.js';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import axiosInstance from '../auth/axiosConfig.js';
 
 function EditarGondola() {
     let navigate = useNavigate();
@@ -24,7 +25,7 @@ function EditarGondola() {
     useEffect(() => {
         
         // Realizar una solicitud HTTP para obtener los detalles del producto
-        axios.get(`http://localhost:3001/gondolas/id/${gondola_id}`)
+        axiosInstance.get(`http://localhost:3001/gondolas/id/${gondola_id}`)
          .then(response => {
            const gondola = response.data;
            // Establecer los valores iniciales del formulario con los detalles del producto
@@ -59,7 +60,7 @@ function EditarGondola() {
             SupermercadoId: id,
         };
         
-        const response = await axios.put(`http://localhost:3001/gondolas/${gondola_id}/editar`, gondolaData);
+        const response = await axiosInstance.put(`http://localhost:3001/gondolas/${gondola_id}/editar`, gondolaData);
         Swal.fire({
           position: "top",
           icon: "success",

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../auth/axiosConfig.js';
 import '../styles/Welcome.css'; // Importa un archivo de estilos para Welcome
 
 function Welcome() {
@@ -8,7 +8,7 @@ function Welcome() {
   let { id } = useParams();
   let { nombre_usuario } = useParams();
   useEffect(() => {
-    axios.get(`http://localhost:3001/supermercados/superById/${id}`).then((response) => {
+    axiosInstance.get(`http://localhost:3001/supermercados/superById/${id}`).then((response) => {
       setSupermercado(response.data);
     });
   }, []);

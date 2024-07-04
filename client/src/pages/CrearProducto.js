@@ -6,7 +6,7 @@ import MapaCompleto from './MapaCompleto.js';
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import Select from 'react-select';
-import axios from 'axios';
+import axiosInstance from '../auth/axiosConfig.js';
 import Swal from "sweetalert2";
 
 function CrearProducto() {
@@ -18,7 +18,7 @@ function CrearProducto() {
   const [gondola, setGondola] = useState();
   const [ubicExacta, setUbicExacta] = useState();
   useEffect(() => {
-    axios.get(`http://localhost:3001/gondolas/${id}`).then((response) => {
+    axiosInstance.get(`http://localhost:3001/gondolas/${id}`).then((response) => {
       
       const gondolasOptions = response.data.map((gondola) => ({
         value: gondola.id, // Debes usar el identificador único de la gondola aquí
@@ -55,7 +55,7 @@ function CrearProducto() {
           ubicExacta: ubicExacta,
           GondolaId: gondola,
         };
-        const response = await axios.post(`http://localhost:3001/productos`, productoData);
+        const response = await axiosInstance.post(`http://localhost:3001/productos`, productoData);
         Swal.fire({
           position: "top",
           icon: "success",

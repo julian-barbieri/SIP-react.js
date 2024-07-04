@@ -17,6 +17,8 @@ const postGondolas = require('./routes/Gondolas.js');
 app.use("/gondolas", postGondolas);
 const postProductos = require('./routes/Productos.js');
 app.use("/productos", postProductos);
+const postClientes = require('./routes/Clientes.js');
+app.use("/clientes", postClientes);
 
 db.sequelize.sync().then(()=> {
     app.listen(3001, () => {

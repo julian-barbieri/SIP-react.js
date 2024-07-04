@@ -4,6 +4,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import '../styles/Productos.css';
 import { round } from 'mathjs/number'
 import Swal from 'sweetalert2';
+import axiosInstance from '../auth/axiosConfig.js';
 
 function Productos() {
 
@@ -14,10 +15,10 @@ function Productos() {
   let { nombre_usuario } = useParams();
   let navigate = useNavigate();
   useEffect(() => {
-    axios.get(`http://localhost:3001/productos/bySuper/${id}`).then((response) => {
+    axiosInstance.get(`http://localhost:3001/productos/bySuper/${id}`).then((response) => {
       setListOfProductos(response.data);
     });
-    axios.get(`http://localhost:3001/gondolas/${id}`).then((response) => {
+    axiosInstance.get(`http://localhost:3001/gondolas/${id}`).then((response) => {
       console.log(response.data.length);
       if(response.data.length > 0) {
         setGondola(true);
@@ -35,9 +36,9 @@ function Productos() {
   }
   const eliminarProducto = async (producto_id) => {
     try {
-      await axios.put(`http://localhost:3001/productos/${producto_id}/eliminarstock`);
+      await axiosInstance.put(`http://localhost:3001/productos/${producto_id}/eliminarstock`);
       // Recargar la lista de productos
-      const response = await axios.get(`http://localhost:3001/productos/bySuper/${id}`);
+      const response = await axiosInstance.get(`http://localhost:3001/productos/bySuper/${id}`);
       setListOfProductos(response.data);
       Swal.fire({
         position: "top",
@@ -54,7 +55,7 @@ function Productos() {
 
   const añadirProducto = async (producto_id) => {
     try {
-      await axios.put(`http://localhost:3001/productos/${producto_id}/agregarstock`);
+      await axiosInstance.put(`http://localhost:3001/productos/${producto_id}/agregarstock`);
       // Recargar la lista de productos
       const response = await axios.get(`http://localhost:3001/productos/bySuper/${id}`);
       setListOfProductos(response.data);

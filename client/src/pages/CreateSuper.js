@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import axiosInstance from '../auth/axiosConfig.js';
 
 
 
@@ -37,14 +38,14 @@ function CreateSuper() {
 
   const crearSuper = async (data) => {
     // Obtener el ID del administrador
-    const adminResponse = await axios.get(`http://localhost:3001/administradores/adminByUsername/${nombre_usuario}`);
+    const adminResponse = await axiosInstance.get(`http://localhost:3001/administradores/adminByUsername/${nombre_usuario}`);
     const adminId = adminResponse.data.id;
 
     const supermercadoData = {
       ...data,
       AdministradoreId: adminId,
     };
-    const response = await axios.post(`http://localhost:3001/supermercados`, supermercadoData);
+    const response = await axiosInstance.post(`http://localhost:3001/supermercados`, supermercadoData);
     
     Swal.fire({
       position: "top",
