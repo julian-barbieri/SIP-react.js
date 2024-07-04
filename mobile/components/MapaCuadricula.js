@@ -15,6 +15,7 @@ export default function MapaCuadricula({
   productosSeleccionados,  // Productos seleccionados para mostrar en el mapa
 }) {
   const [grid, setGrid] = useState([]);
+  const [logitudCamino, setLogitudCamino] = useState(0);
 
   // Inicializa la cuadrícula y marca las celdas ocupadas por góndolas
   useEffect(() => {
@@ -32,6 +33,13 @@ export default function MapaCuadricula({
 
     setGrid(initialGrid);
   }, [numLargo, numAncho, gondolas]);
+
+  useEffect(() => {
+    if (camino) {
+      setLogitudCamino(camino.length);
+    }
+  }, [camino]);
+
 
   // Calcula el estilo para el círculo que indica la ubicación exacta de un producto en una góndola
   function calculateCirclePosition(ubicExacta) {
@@ -208,6 +216,7 @@ export default function MapaCuadricula({
         <View key={producto.id} style={styles.itemProd}>
           <Text style={styles.prodItemNombre}>{producto.nombre}</Text>
           <Text style={styles.prodItemCategoria}>{producto.categoria}</Text>
+          <Text style={styles.prodItemCategoria}>Logitud camino:{logitudCamino}</Text>
         </View>
       ))}
       <ScrollView style={styles.verticalScroll}>
