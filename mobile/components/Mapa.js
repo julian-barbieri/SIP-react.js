@@ -9,7 +9,7 @@ import encontrarCamino from "./PathFinding.js/encontrarCamino";
 export default function Mapa({ supermercado, productosSeleccionados }) {
   const [gondolas, setGondolas] = useState([]);
   const [gondolasRest, setGondolasRest] = useState([]);
-  const [gondolaCaminoCorto, setGondolaCaminoCorto] = useState({});
+  const [gondolaCaminoCorto, setGondolaCaminoCorto] = useState(null);
 
   // Obtener la lista de góndolas desde el servidor
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
     let caminoCorto = Infinity;
     let gondCaminoCorto = null;
 
-    //Busco gondola de camino corto
+    // Busco la gondola de camino corto desde la entrada
     gondolasAjustadas.forEach((gondola) => {
       productosSeleccionados.forEach((producto) => {
         if (producto.GondolaId === gondola.id) {
@@ -51,30 +51,50 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
       });
     });
 
-    //Agrego gondolas restantes
-    const gondolasRestantes = new Set();
-    gondolasAjustadas.forEach((gondola) => {
-      productosSeleccionados.forEach((producto) => {
-        if (
-          producto.GondolaId === gondola.id &&
-          gondola.id !== gondCaminoCorto.id
-        ) {
-          gondolasRestantes.add(gondola);
+    // Inicializo las góndolas restantes
+    const gondolasRestantes = gondolasAjustadas.filter(
+      (gondola) =>
+        productosSeleccionados.some((producto) => producto.GondolaId === gondola.id) &&
+        gondola.id !== gondCaminoCorto.id
+    );
+
+    // Ordeno las gondolas restantes por el camino más corto desde la última gondola procesada
+    const ordenGondolas = [gondCaminoCorto];
+    let ultimaGondola = gondCaminoCorto;
+
+    while (gondolasRestantes.length > 0) {
+      caminoCorto = Infinity;
+      let siguienteGondola = null;
+      let indiceGondola = -1;
+
+      gondolasRestantes.forEach((gondola, index) => {
+        const camino = encontrarCamino(
+          ultimaGondola.ubicacionx,
+          ultimaGondola.ubicaciony,
+          gondola.ubicacionx,
+          gondola.ubicaciony,
+          gondolasAjustadas,
+          supermercado.ancho,
+          supermercado.largo
+        );
+        if (camino && camino.length < caminoCorto) {
+          caminoCorto = camino.length;
+          siguienteGondola = gondola;
+          indiceGondola = index;
         }
       });
-    });
 
-    return {
-      gondCaminoCorto,
-      gondolasRestantes: Array.from(gondolasRestantes),
-    };
+      if (siguienteGondola) {
+        ordenGondolas.push(siguienteGondola);
+        ultimaGondola = siguienteGondola;
+        gondolasRestantes.splice(indiceGondola, 1);
+      } else {
+        break;
+      }
+    }
+
+    return ordenGondolas;
   };
-
-  useEffect(() => {
-    const gondolaCamCorto = gonCaminoCorto().gondCaminoCorto;
-    setGondolaCaminoCorto(gondolaCamCorto);
-    setGondolasRest(gonCaminoCorto().gondolasRestantes);
-  }, [gondolas, productosSeleccionados, supermercado]);
 
   const prodSeleccionado = (gondolaId) => {
     const product = [];
@@ -85,6 +105,12 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
     });
     return product;
   };
+
+  useEffect(() => {
+    const ordenGondolas = gonCaminoCorto();
+    setGondolaCaminoCorto(ordenGondolas[0]);
+    setGondolasRest(ordenGondolas.slice(1));
+  }, [gondolas, productosSeleccionados, supermercado]);
 
   // Mapa de góndola camino CORTO
   const mapaCaminoCorto = gondolaCaminoCorto ? (
@@ -132,6 +158,7 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
     </View>
   );
 }
+
 
 // Estilos
 const styles = StyleSheet.create({

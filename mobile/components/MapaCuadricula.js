@@ -133,7 +133,7 @@ export default function MapaCuadricula({
 
       cuadros.push(
         <View key={`${fila}-${columna}`} style={estiloCuadro}>
-          {!gondolaOcupada && !esEntrada && camino && camino.some(([x, y]) => x === columna && y === fila) ? (
+          {!gondolaOcupada && camino && camino.some(([x, y]) => x === columna && y === fila) ? (
             <View style={styles.camino}></View>
           ) : null}
 
