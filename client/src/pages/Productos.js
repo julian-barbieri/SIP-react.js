@@ -19,7 +19,6 @@ function Productos() {
       setListOfProductos(response.data);
     });
     axiosInstance.get(`http://localhost:3001/gondolas/${id}`).then((response) => {
-      console.log(response.data.length);
       if(response.data.length > 0) {
         setGondola(true);
       }

@@ -39,7 +39,7 @@ function EditarProducto() {
     // Realizar una solicitud HTTP para obtener los detalles del producto
     axiosInstance.get(`http://localhost:3001/productos/${producto_id}`)
      .then(response => {
-       //console.log(response.data);
+
        const producto = response.data;
        // Establecer los valores iniciales del formulario con los detalles del producto
        setInitialValues({
@@ -95,7 +95,7 @@ function EditarProducto() {
     GondolaId: Yup.string().required("Campo obligatorio"),
   })
   const onSubmit = async (data) => {
-    console.log(data);
+
     try {
         // pasa la data del producto
         const productoData = {

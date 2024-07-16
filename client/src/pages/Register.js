@@ -16,9 +16,7 @@ function Register() {
     const onSubmit = async (data) => {
       try {
         // Verifica si el usuario ya existe
-        console.log(data.nombre_usuario);
         const response = await axiosInstance.get(`http://localhost:3001/administradores/adminByUsername/${data.nombre_usuario}`, data);
-        console.log(response);
         if (response.data !== null) {
           // Usuario existe, establece usuarioExiste en true
           setUsuarioExiste(true);

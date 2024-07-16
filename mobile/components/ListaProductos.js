@@ -15,7 +15,7 @@ export default function ListaProductos({ supermercadoId }) {
   const [listaProductos, setListaProductos] = useState([]);
   const [search, setSearch] = useState(""); // Estado para el término de búsqueda
   const [productosSeleccionados, setProductosSeleccionados] = useState([]);
-  const [limitOfProducts, setLimitOfProducts] = useState(3);
+  const [limitOfProducts, setLimitOfProducts] = useState(5);
 
   useEffect(() => {
     axios

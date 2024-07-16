@@ -7,7 +7,7 @@ export default function ubicGondolaSeleccionada(gondolas, productosSeleccionados
           gondolax = gondola.ubicacionx+gondola.ancho;
           gondolay = gondola.ubicaciony;
         } else if(gondola.id === producto.GondolaId && producto.ubicExacta === "izquierda") {
-          gondolax = gondola.ubicacionx;
+          gondolax = gondola.ubicacionx-1;
           gondolay = gondola.ubicaciony+gondola.largo-1;
         } else if(gondola.id === producto.GondolaId && producto.ubicExacta === "abajo") {
           gondolax = gondola.ubicacionx;
