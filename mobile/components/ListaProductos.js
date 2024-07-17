@@ -19,7 +19,7 @@ export default function ListaProductos({ supermercadoId }) {
 
   useEffect(() => {
     axios
-      .get(`http://192.168.0.117:3001/productos/bySuper/${supermercadoId}`)
+      .get(`http://192.168.0.109:3001/productos/bySuper/${supermercadoId}`)
       .then((response) => {
         setListaProductos(response.data);
       })
