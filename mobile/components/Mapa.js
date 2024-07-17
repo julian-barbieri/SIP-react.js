@@ -14,7 +14,7 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
   // Obtener la lista de góndolas desde el servidor
   useEffect(() => {
     axios
-      .get(`http://192.168.0.117:3001/gondolas/${supermercado.id}`)
+      .get(`http://192.168.0.109:3001/gondolas/${supermercado.id}`)
       .then((response) => {
         setGondolas(response.data);
       });
@@ -54,8 +54,9 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
     // Inicializo las góndolas restantes
     const gondolasRestantes = gondolasAjustadas.filter(
       (gondola) =>
-        productosSeleccionados.some((producto) => producto.GondolaId === gondola.id) &&
-        gondola.id !== gondCaminoCorto.id
+        productosSeleccionados.some(
+          (producto) => producto.GondolaId === gondola.id
+        ) && gondola.id !== gondCaminoCorto.id
     );
 
     // Ordeno las gondolas restantes por el camino más corto desde la última gondola procesada
@@ -131,7 +132,8 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
 
   // Mapear las góndolas ajustadas a componentes MapaCuadricula
   const mapasRestantes = gondolasRest.map((gondola, index) => {
-    const gondolaAnterior = index > 0 ? gondolasRest[index - 1] : gondolaCaminoCorto;
+    const gondolaAnterior =
+      index > 0 ? gondolasRest[index - 1] : gondolaCaminoCorto;
     return (
       <View key={gondola.id}>
         <MapaCuadricula
@@ -158,7 +160,6 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
     </View>
   );
 }
-
 
 // Estilos
 const styles = StyleSheet.create({

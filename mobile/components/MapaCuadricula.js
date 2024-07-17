@@ -241,13 +241,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   camino: {
-    width: 20,
-    height: 20,
+    width: 15,
+    height: 15,
     borderRadius: 10,
     backgroundColor: "#4a90e2",
     position: "absolute",
-    top: 5,
-    left: 5,
+    top: 7.5,
+    left: 7.5,
   },
   itemProd: {
     backgroundColor: "#fff",
