@@ -107,6 +107,10 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
     return product;
   };
 
+  const productoAnterior = (gondolaAnteriorId) => {
+    return productosSeleccionados.find((producto) => producto.GondolaId === gondolaAnteriorId);
+  };
+
   useEffect(() => {
     const ordenGondolas = gonCaminoCorto();
     setGondolaCaminoCorto(ordenGondolas[0]);
@@ -126,14 +130,14 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
         gondolas={gondolasAjustadas}
         productosSeleccionados={prodSeleccionado(gondolaCaminoCorto.id)}
         mapaCorto={true}
+        productoAnterior={null}
       />
     </View>
   ) : null;
 
   // Mapear las góndolas ajustadas a componentes MapaCuadricula
   const mapasRestantes = gondolasRest.map((gondola, index) => {
-    const gondolaAnterior =
-      index > 0 ? gondolasRest[index - 1] : gondolaCaminoCorto;
+    const gondolaAnterior = index > 0 ? gondolasRest[index-1] : gondolaCaminoCorto;
     return (
       <View key={gondola.id}>
         <MapaCuadricula
@@ -147,6 +151,7 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
           productosSeleccionados={prodSeleccionado(gondola.id)}
           gondolaAnterior={gondolaAnterior}
           mapaCorto={false}
+          productoAnterior={productoAnterior(gondolaAnterior.id)}
         />
       </View>
     );
