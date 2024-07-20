@@ -183,7 +183,7 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
           disabled={currentIndex === 0}
           style={currentIndex === 0 ? styles.hidden : styles.button}
         >
-          <AntDesign name="arrowleft" size={24} color="black" />
+          <AntDesign name="arrowleft" size={32} color="black" />
         </TouchableOpacity>
         <Text style={styles.indicator}>
           {currentIndex + 1} de {totalMapas}
@@ -193,7 +193,7 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
           disabled={currentIndex === totalMapas - 1}
           style={currentIndex === totalMapas - 1 ? styles.hidden : styles.button}
         >
-          <AntDesign name="arrowright" size={24} color="black" />
+          <AntDesign name="arrowright" size={32} color="black" />
         </TouchableOpacity>
       </View>
     </View>
@@ -205,15 +205,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 20,
+    marginTop: 30,
   },
   button: {
-    padding: 10,
+    padding: 0,
+    marginLeft: 50, 
+    marginRight: 50, 
   },
   hidden: {
     opacity: 0,
   },
   indicator: {
+    alignItems: "center",
+    position: "absolute",
+    left: "44%",
     fontSize: 16,
   },
 });
