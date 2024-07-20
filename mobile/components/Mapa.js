@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import axios from "axios";
+import { AntDesign } from '@expo/vector-icons';
 import MapaTitulo from "./MapaTitulo";
 import MapaCuadricula from "./MapaCuadricula";
 import ubicGondolaSeleccionada from "./PathFinding.js/ubicGondolaSeleccionada";
@@ -10,6 +11,7 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
   const [gondolas, setGondolas] = useState([]);
   const [gondolasRest, setGondolasRest] = useState([]);
   const [gondolaCaminoCorto, setGondolaCaminoCorto] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   // Obtener la lista de góndolas desde el servidor
   useEffect(() => {
@@ -108,7 +110,9 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
   };
 
   const productoAnterior = (gondolaAnteriorId) => {
-    return productosSeleccionados.find((producto) => producto.GondolaId === gondolaAnteriorId);
+    return productosSeleccionados.find(
+      (producto) => producto.GondolaId === gondolaAnteriorId
+    );
   };
 
   useEffect(() => {
@@ -117,83 +121,99 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
     setGondolasRest(ordenGondolas.slice(1));
   }, [gondolas, productosSeleccionados, supermercado]);
 
-  // Mapa de góndola camino CORTO
-  const mapaCaminoCorto = gondolaCaminoCorto ? (
-    <View key={gondolaCaminoCorto.id}>
-      <MapaCuadricula
-        numAncho={supermercado.ancho}
-        numLargo={supermercado.largo}
-        entradax={supermercado.entradax - 1}
-        entraday={supermercado.entraday - 1}
-        salidax={supermercado.salidax - 1}
-        saliday={supermercado.saliday - 1}
-        gondolas={gondolasAjustadas}
-        productosSeleccionados={prodSeleccionado(gondolaCaminoCorto.id)}
-        mapaCorto={true}
-        productoAnterior={null}
-      />
-    </View>
-  ) : null;
+  const handleNext = () => {
+    if (currentIndex < gondolasRest.length) {
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
 
-  // Mapear las góndolas ajustadas a componentes MapaCuadricula
-  const mapasRestantes = gondolasRest.map((gondola, index) => {
-    const gondolaAnterior = index > 0 ? gondolasRest[index-1] : gondolaCaminoCorto;
-    return (
-      <View key={gondola.id}>
-        <MapaCuadricula
-          numAncho={supermercado.ancho}
-          numLargo={supermercado.largo}
-          entradax={supermercado.entradax - 1}
-          entraday={supermercado.entraday - 1}
-          salidax={supermercado.salidax - 1}
-          saliday={supermercado.saliday - 1}
-          gondolas={gondolasAjustadas}
-          productosSeleccionados={prodSeleccionado(gondola.id)}
-          gondolaAnterior={gondolaAnterior}
-          mapaCorto={false}
-          productoAnterior={productoAnterior(gondolaAnterior.id)}
-        />
-      </View>
-    );
-  });
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
+  };
+
+  const totalMapas = gondolasRest.length + 1;
 
   return (
     <View>
       <MapaTitulo supermercado={supermercado} />
-      {mapaCaminoCorto}
-      {mapasRestantes}
+      {gondolaCaminoCorto && currentIndex === 0 && (
+        <View key={gondolaCaminoCorto.id}>
+          <MapaCuadricula
+            numAncho={supermercado.ancho}
+            numLargo={supermercado.largo}
+            entradax={supermercado.entradax - 1}
+            entraday={supermercado.entraday - 1}
+            salidax={supermercado.salidax - 1}
+            saliday={supermercado.saliday - 1}
+            gondolas={gondolasAjustadas}
+            productosSeleccionados={prodSeleccionado(gondolaCaminoCorto.id)}
+            mapaCorto={true}
+            productoAnterior={null}
+          />
+        </View>
+      )}
+      {gondolasRest.map((gondola, index) => {
+        const gondolaAnterior =
+          index > 0 ? gondolasRest[index - 1] : gondolaCaminoCorto;
+        return (
+          currentIndex === index + 1 && (
+            <View key={gondola.id}>
+              <MapaCuadricula
+                numAncho={supermercado.ancho}
+                numLargo={supermercado.largo}
+                entradax={supermercado.entradax - 1}
+                entraday={supermercado.entraday - 1}
+                salidax={supermercado.salidax - 1}
+                saliday={supermercado.saliday - 1}
+                gondolas={gondolasAjustadas}
+                productosSeleccionados={prodSeleccionado(gondola.id)}
+                gondolaAnterior={gondolaAnterior}
+                mapaCorto={false}
+                productoAnterior={productoAnterior(gondolaAnterior.id)}
+              />
+            </View>
+          )
+        );
+      })}
+      <View style={styles.navigation}>
+        <TouchableOpacity
+          onPress={handlePrev}
+          disabled={currentIndex === 0}
+          style={currentIndex === 0 ? styles.hidden : styles.button}
+        >
+          <AntDesign name="arrowleft" size={24} color="black" />
+        </TouchableOpacity>
+        <Text style={styles.indicator}>
+          {currentIndex + 1} de {totalMapas}
+        </Text>
+        <TouchableOpacity
+          onPress={handleNext}
+          disabled={currentIndex === totalMapas - 1}
+          style={currentIndex === totalMapas - 1 ? styles.hidden : styles.button}
+        >
+          <AntDesign name="arrowright" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
-// Estilos
 const styles = StyleSheet.create({
-  containerMapa: {
-    width: "auto",
-    display: "flex",
-    borderRadius: 8,
-    borderWidth: 1,
-    boxShadowColor: "#000",
-    boxShadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    boxShadowOpacity: 0.1,
-    marginTop: 20,
-    marginRight: 15,
-    marginLeft: 15,
-  },
-  finalizarButton: {
-    border: 1,
-    borderRadius: 8,
-    padding: 10,
-    backgroundColor: "#e0e0e0",
-    marginTop: 50,
-    marginRight: 75,
-    marginLeft: 75,
+  navigation: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
+    marginTop: 20,
   },
-  finalizarButtonTexto: {
-    color: "black",
+  button: {
+    padding: 10,
+  },
+  hidden: {
+    opacity: 0,
+  },
+  indicator: {
+    fontSize: 16,
   },
 });
