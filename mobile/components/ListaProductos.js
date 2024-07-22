@@ -11,15 +11,22 @@ import {
 import axios from "axios";
 import FinalizarButton from "./buttons/FinalizarButton";
 
-export default function ListaProductos({ supermercadoId, onSeleccionarProducto, productosSelecc, onEliminarProducto }) {
+export default function ListaProductos({
+  supermercadoId,
+  onSeleccionarProducto,
+  productosSelecc,
+  onEliminarProducto,
+}) {
   const [listaProductos, setListaProductos] = useState([]);
   const [search, setSearch] = useState(""); // Estado para el término de búsqueda
   const limitOfProducts = 5;
-  const [productosSeleccionados, setProductosSeleccionados] = useState([...productosSelecc]);
+  const [productosSeleccionados, setProductosSeleccionados] = useState([
+    ...productosSelecc,
+  ]);
 
   useEffect(() => {
     axios
-      .get(`http://192.168.0.109:3001/productos/bySuper/${supermercadoId}`)
+      .get(`http://192.168.107.127:3001/productos/bySuper/${supermercadoId}`)
       .then((response) => {
         setListaProductos(response.data);
       })
@@ -43,7 +50,7 @@ export default function ListaProductos({ supermercadoId, onSeleccionarProducto, 
       setProductosSeleccionados((prevProductos) =>
         prevProductos.filter((producto) => producto.id !== item.id)
       );
-      onEliminarProducto(item.id)
+      onEliminarProducto(item.id);
     } else if (productosSeleccionados.length < limitOfProducts) {
       setProductosSeleccionados((prevProductos) => [...prevProductos, item]);
       onSeleccionarProducto(item);
@@ -68,19 +75,19 @@ export default function ListaProductos({ supermercadoId, onSeleccionarProducto, 
   return (
     <View style={styles.container}>
       {/* Finalizar button */}
-        <FinalizarButton
-          productosSeleccionados={productosSeleccionados}
-          supermercadoId={supermercadoId}
-        />
+      <FinalizarButton
+        productosSeleccionados={productosSeleccionados}
+        supermercadoId={supermercadoId}
+      />
       {/* Barra de búsqueda */}
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Buscar productos"
-            value={search}
-            onChangeText={(text) => setSearch(text)}
-          />
-        </View>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Buscar productos"
+          value={search}
+          onChangeText={(text) => setSearch(text)}
+        />
+      </View>
 
       {/* Lista de productos */}
       <FlatList

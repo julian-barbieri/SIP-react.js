@@ -25,13 +25,18 @@ export default function ShoppingCartButton({ productosSelecc, onEliminarProducto
   return (
     <View style={styles.container}>
       <Pressable style={styles.shoppingCartButton} onPress={toggleModal}>
-        <AntDesign name="shoppingcart" size={32} color="black" />
+        <AntDesign name="shoppingcart" size={44} color="black" />
+        {productosSeleccionados.length > 0 && (
+          <View style={styles.badge}>
+            <Text style={styles.badgeText}>{productosSeleccionados.length}</Text>
+          </View>
+        )}
       </Pressable>
       <Modal
         isVisible={isModalVisible}
         onBackdropPress={toggleModal}
         onSwipeComplete={toggleModal}
-        swipeDirection="left"
+        swipeDirection="right"
         animationIn="slideInRight"
         animationOut="slideOutRight"
         style={styles.modal}
@@ -131,5 +136,21 @@ const styles = StyleSheet.create({
   },
   closeButtonText: {
     fontSize: 16,
+  },
+  badge: {
+    position: "absolute",
+    right: 5,
+    top: 0,
+    backgroundColor: "red",
+    borderRadius: 10,
+    padding: 1,
+    minWidth: 20,
+    minHeight: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  badgeText: {
+    color: "white",
+    fontWeight: "bold",
   },
 });

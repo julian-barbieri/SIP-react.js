@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import axios from "axios";
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign } from "@expo/vector-icons";
 import MapaTitulo from "./MapaTitulo";
 import MapaCuadricula from "./MapaCuadricula";
 import ubicGondolaSeleccionada from "./PathFinding.js/ubicGondolaSeleccionada";
@@ -16,7 +16,7 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
   // Obtener la lista de góndolas desde el servidor
   useEffect(() => {
     axios
-      .get(`http://192.168.0.109:3001/gondolas/${supermercado.id}`)
+      .get(`http://192.168.107.127:3001/gondolas/${supermercado.id}`)
       .then((response) => {
         setGondolas(response.data);
       });
@@ -191,7 +191,9 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
         <TouchableOpacity
           onPress={handleNext}
           disabled={currentIndex === totalMapas - 1}
-          style={currentIndex === totalMapas - 1 ? styles.hidden : styles.button}
+          style={
+            currentIndex === totalMapas - 1 ? styles.hidden : styles.button
+          }
         >
           <AntDesign name="arrowright" size={32} color="black" />
         </TouchableOpacity>
@@ -209,8 +211,8 @@ const styles = StyleSheet.create({
   },
   button: {
     padding: 0,
-    marginLeft: 50, 
-    marginRight: 50, 
+    marginLeft: 50,
+    marginRight: 50,
   },
   hidden: {
     opacity: 0,
