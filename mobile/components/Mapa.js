@@ -121,47 +121,87 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
     setGondolasRest(ordenGondolas.slice(1));
   }, [gondolas, productosSeleccionados, supermercado]);
 
-  // Mapa de góndola camino CORTO
-  const mapaCaminoCorto = gondolaCaminoCorto ? (
-    <View key={gondolaCaminoCorto.id}>
-      <MapaCuadricula
-        numAncho={supermercado.ancho}
-        numLargo={supermercado.largo}
-        entradax={supermercado.entradax - 1}
-        entraday={supermercado.entraday - 1}
-        salidax={supermercado.salidax - 1}
-        saliday={supermercado.saliday - 1}
-        gondolas={gondolasAjustadas}
-        productosSeleccionados={prodSeleccionado(gondolaCaminoCorto.id)}
-        mapaCorto={true}
-      />
-    </View>
-  ) : null;
+  const handleNext = () => {
+    if (currentIndex < gondolasRest.length) {
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
 
-  // Mapear las góndolas ajustadas a componentes MapaCuadricula
-  const mapasRestantes = gondolasRest.map((gondola, index) => {
-    const gondolaAnterior = index > 0 ? gondolasRest[index - 1] : gondolaCaminoCorto;
-    return (
-      <View key={gondola.id}>
-        <MapaCuadricula
-          numAncho={supermercado.ancho}
-          numLargo={supermercado.largo}
-          entradax={supermercado.entradax - 1}
-          entraday={supermercado.entraday - 1}
-          salidax={supermercado.salidax - 1}
-          saliday={supermercado.saliday - 1}
-          gondolas={gondolasAjustadas}
-          productosSeleccionados={prodSeleccionado(gondola.id)}
-          gondolaAnterior={gondolaAnterior}
-          mapaCorto={false}
-        />
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
+  };
+
+  const totalMapas = gondolasRest.length + 1;
+
+  return (
+    <View>
+      <MapaTitulo supermercado={supermercado} />
+      {gondolaCaminoCorto && currentIndex === 0 && (
+        <View key={gondolaCaminoCorto.id}>
+          <MapaCuadricula
+            numAncho={supermercado.ancho}
+            numLargo={supermercado.largo}
+            entradax={supermercado.entradax - 1}
+            entraday={supermercado.entraday - 1}
+            salidax={supermercado.salidax - 1}
+            saliday={supermercado.saliday - 1}
+            gondolas={gondolasAjustadas}
+            productosSeleccionados={prodSeleccionado(gondolaCaminoCorto.id)}
+            mapaCorto={true}
+            productoAnterior={null}
+          />
+        </View>
+      )}
+      {gondolasRest.map((gondola, index) => {
+        const gondolaAnterior =
+          index > 0 ? gondolasRest[index - 1] : gondolaCaminoCorto;
+        return (
+          currentIndex === index + 1 && (
+            <View key={gondola.id}>
+              <MapaCuadricula
+                numAncho={supermercado.ancho}
+                numLargo={supermercado.largo}
+                entradax={supermercado.entradax - 1}
+                entraday={supermercado.entraday - 1}
+                salidax={supermercado.salidax - 1}
+                saliday={supermercado.saliday - 1}
+                gondolas={gondolasAjustadas}
+                productosSeleccionados={prodSeleccionado(gondola.id)}
+                gondolaAnterior={gondolaAnterior}
+                mapaCorto={false}
+                productoAnterior={productoAnterior(gondolaAnterior.id)}
+              />
+            </View>
+          )
+        );
+      })}
+      <View style={styles.navigation}>
+        <TouchableOpacity
+          onPress={handlePrev}
+          disabled={currentIndex === 0}
+          style={currentIndex === 0 ? styles.hidden : styles.button}
+        >
+          <AntDesign name="arrowleft" size={32} color="black" />
+        </TouchableOpacity>
+        <Text style={styles.indicator}>
+          {currentIndex + 1} de {totalMapas}
+        </Text>
+        <TouchableOpacity
+          onPress={handleNext}
+          disabled={currentIndex === totalMapas - 1}
+          style={
+            currentIndex === totalMapas - 1 ? styles.hidden : styles.button
+          }
+        >
+          <AntDesign name="arrowright" size={32} color="black" />
+        </TouchableOpacity>
       </View>
     </View>
   );
 }
 
-
-// Estilos
 const styles = StyleSheet.create({
   navigation: {
     flexDirection: "row",
