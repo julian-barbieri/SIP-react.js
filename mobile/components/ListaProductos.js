@@ -9,13 +9,13 @@ import {
   Pressable,
 } from "react-native";
 import axios from "axios";
-import ProductosSeleccionados from "../components/ProductosSeleccionados";
+import FinalizarButton from "./buttons/FinalizarButton";
 
-export default function ListaProductos({ supermercadoId }) {
+export default function ListaProductos({ supermercadoId, onSeleccionarProducto, productosSelecc, onEliminarProducto }) {
   const [listaProductos, setListaProductos] = useState([]);
   const [search, setSearch] = useState(""); // Estado para el término de búsqueda
-  const [productosSeleccionados, setProductosSeleccionados] = useState([]);
-  const [limitOfProducts, setLimitOfProducts] = useState(5);
+  const limitOfProducts = 5;
+  const [productosSeleccionados, setProductosSeleccionados] = useState([...productosSelecc]);
 
   useEffect(() => {
     axios
@@ -31,10 +31,25 @@ export default function ListaProductos({ supermercadoId }) {
       });
   }, [supermercadoId]);
 
-  const eliminarProductoSeleccionado = (id) => {
-    setProductosSeleccionados((prevProductos) =>
-      prevProductos.filter((producto) => producto.id !== id)
+  useEffect(() => {
+    setProductosSeleccionados(productosSelecc);
+  }, [productosSelecc]);
+
+  const handlePressProducto = (item) => {
+    const isSelected = productosSeleccionados.some(
+      (producto) => producto.id === item.id
     );
+    if (isSelected) {
+      setProductosSeleccionados((prevProductos) =>
+        prevProductos.filter((producto) => producto.id !== item.id)
+      );
+      onEliminarProducto(item.id)
+    } else if (productosSeleccionados.length < limitOfProducts) {
+      setProductosSeleccionados((prevProductos) => [...prevProductos, item]);
+      onSeleccionarProducto(item);
+    } else {
+      alert("Máximo " + limitOfProducts + " productos");
+    }
   };
 
   const quitarProductosSinStock = (listaProductos) => {
@@ -50,30 +65,22 @@ export default function ListaProductos({ supermercadoId }) {
       item.subCategoria.toLowerCase().includes(search.toLowerCase()) // Búsqueda por subcategoría
   );
 
-  const productoSeleccionado = (id) => {
-    const item = filteredProductos.find((item) => item.id === id);
-    // Verificar si el producto ya está en la lista de productos seleccionados
-    if (
-      !productosSeleccionados.some((selected) => selected.id === item.id) &&
-      productosSeleccionados.length < limitOfProducts // Límite de 5 productos
-    ) {
-      setProductosSeleccionados([...productosSeleccionados, item]);
-    } else if (productosSeleccionados.length >= limitOfProducts) {
-      alert("Máximo " + limitOfProducts + " productos");
-    }
-  };
-
   return (
     <View style={styles.container}>
-      {/* Barra de búsqueda */}
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Buscar productos"
-          value={search}
-          onChangeText={(text) => setSearch(text)}
+      {/* Finalizar button */}
+        <FinalizarButton
+          productosSeleccionados={productosSeleccionados}
+          supermercadoId={supermercadoId}
         />
-      </View>
+      {/* Barra de búsqueda */}
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Buscar productos"
+            value={search}
+            onChangeText={(text) => setSearch(text)}
+          />
+        </View>
 
       {/* Lista de productos */}
       <FlatList
@@ -89,7 +96,7 @@ export default function ListaProductos({ supermercadoId }) {
                 (producto) => producto.id === item.id
               ) && styles.productoSeleccionado, // Estilo condicional
             ]}
-            onPress={() => productoSeleccionado(item.id)}
+            onPress={() => handlePressProducto(item)}
           >
             <Text style={styles.productoNombre}>{item.nombre}</Text>
             <Text style={styles.productoMarca}>{item.marca}</Text>
@@ -111,12 +118,6 @@ export default function ListaProductos({ supermercadoId }) {
             )}
           </Pressable>
         )}
-      />
-      {/* Productos seleccionados */}
-      <ProductosSeleccionados
-        productosSeleccionados={productosSeleccionados}
-        eliminarProductoSeleccionado={eliminarProductoSeleccionado}
-        supermercadoId={supermercadoId}
       />
     </View>
   );
