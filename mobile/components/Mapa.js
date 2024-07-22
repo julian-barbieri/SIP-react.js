@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import axios from "axios";
+import { AntDesign } from "@expo/vector-icons";
 import MapaTitulo from "./MapaTitulo";
 import MapaCuadricula from "./MapaCuadricula";
 import ubicGondolaSeleccionada from "./PathFinding.js/ubicGondolaSeleccionada";
@@ -10,11 +11,12 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
   const [gondolas, setGondolas] = useState([]);
   const [gondolasRest, setGondolasRest] = useState([]);
   const [gondolaCaminoCorto, setGondolaCaminoCorto] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   // Obtener la lista de góndolas desde el servidor
   useEffect(() => {
     axios
-      .get(`http://192.168.0.109:3001/gondolas/${supermercado.id}`)
+      .get(`http://192.168.0.117:3001/gondolas/${supermercado.id}`)
       .then((response) => {
         setGondolas(response.data);
       });
@@ -107,6 +109,12 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
     return product;
   };
 
+  const productoAnterior = (gondolaAnteriorId) => {
+    return productosSeleccionados.find(
+      (producto) => producto.GondolaId === gondolaAnteriorId
+    );
+  };
+
   useEffect(() => {
     const ordenGondolas = gonCaminoCorto();
     setGondolaCaminoCorto(ordenGondolas[0]);
@@ -132,8 +140,7 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
 
   // Mapear las góndolas ajustadas a componentes MapaCuadricula
   const mapasRestantes = gondolasRest.map((gondola, index) => {
-    const gondolaAnterior =
-      index > 0 ? gondolasRest[index - 1] : gondolaCaminoCorto;
+    const gondolaAnterior = index > 0 ? gondolasRest[index - 1] : gondolaCaminoCorto;
     return (
       <View key={gondola.id}>
         <MapaCuadricula
@@ -149,46 +156,31 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
           mapaCorto={false}
         />
       </View>
-    );
-  });
-
-  return (
-    <View>
-      <MapaTitulo supermercado={supermercado} />
-      {mapaCaminoCorto}
-      {mapasRestantes}
     </View>
   );
 }
 
+
 // Estilos
 const styles = StyleSheet.create({
-  containerMapa: {
-    width: "auto",
-    display: "flex",
-    borderRadius: 8,
-    borderWidth: 1,
-    boxShadowColor: "#000",
-    boxShadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    boxShadowOpacity: 0.1,
-    marginTop: 20,
-    marginRight: 15,
-    marginLeft: 15,
-  },
-  finalizarButton: {
-    border: 1,
-    borderRadius: 8,
-    padding: 10,
-    backgroundColor: "#e0e0e0",
-    marginTop: 50,
-    marginRight: 75,
-    marginLeft: 75,
+  navigation: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
+    marginTop: 30,
   },
-  finalizarButtonTexto: {
-    color: "black",
+  button: {
+    padding: 0,
+    marginLeft: 50,
+    marginRight: 50,
+  },
+  hidden: {
+    opacity: 0,
+  },
+  indicator: {
+    alignItems: "center",
+    position: "absolute",
+    left: "44%",
+    fontSize: 16,
   },
 });

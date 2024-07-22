@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, ScrollView } from "react-native";
 import ubicGondolaSeleccionada from "./PathFinding.js/ubicGondolaSeleccionada";
 import encontrarCamino from "./PathFinding.js/encontrarCamino";
 import _ from "lodash";
+import ubicInicioCamino from "./PathFinding.js/ubicInicioCamino";
 
 export default function MapaCuadricula({
   numAncho,
@@ -16,6 +17,7 @@ export default function MapaCuadricula({
   productosSeleccionados,
   mapaCorto,
   gondolaAnterior,
+  productoAnterior
 }) {
   const [grid, setGrid] = useState([]);
   useEffect(() => {
@@ -29,6 +31,7 @@ export default function MapaCuadricula({
     });
 
     setGrid(initialGrid);
+
   }, []);
 
   function calculateCirclePosition(ubicExacta) {
@@ -178,10 +181,10 @@ export default function MapaCuadricula({
     }
     return filas;
   };
-
+  
   const camino = encontrarCamino(
-    mapaCorto ? entradax : gondolaAnterior.ubicacionx,
-    mapaCorto ? entraday : gondolaAnterior.ubicaciony,
+    mapaCorto ? entradax : ubicInicioCamino(gondolaAnterior, productoAnterior).gondolax,
+    mapaCorto ? entraday : ubicInicioCamino(gondolaAnterior, productoAnterior).gondolay,
     ubicGondolaSeleccionada(gondolas, productosSeleccionados).gondolax,
     ubicGondolaSeleccionada(gondolas, productosSeleccionados).gondolay,
     gondolas,
@@ -241,13 +244,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   camino: {
-    width: 20,
-    height: 20,
+    width: 15,
+    height: 15,
     borderRadius: 10,
     backgroundColor: "#4a90e2",
     position: "absolute",
-    top: 5,
-    left: 5,
+    top: 7.5,
+    left: 7.5,
   },
   itemProd: {
     backgroundColor: "#fff",

@@ -26,7 +26,7 @@ export default function RegisterForm() {
     try {
       // Verifica si el usuario ya existe
       const response = await axios.get(
-        `http://192.168.0.109:3001/clientes/clienteByUsername/${data.nombre_usuario}`,
+        `http://192.168.0.117:3001/clientes/clienteByUsername/${data.nombre_usuario}`,
         data
       );
       if (response.data !== null) {
@@ -35,7 +35,7 @@ export default function RegisterForm() {
       } else {
         setUsuarioExiste(false);
         // Usuario no existe, procede con el registro
-        await axios.post("http://192.168.0.109:3001/clientes", data);
+        await axios.post("http://192.168.0.117:3001/clientes", data);
         // Redirige a la página de inicio de sesión
         alert("Registro exitoso");
         navigation.navigate("Login");

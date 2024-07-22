@@ -1,23 +1,35 @@
 export default function ubicGondolaSeleccionada(gondolas, productosSeleccionados) {
-    let gondolax = null;
-    let gondolay = null;
-    gondolas.map((gondola) => {
-      productosSeleccionados.map((producto) => {
-        if(gondola.id === producto.GondolaId && producto.ubicExacta === "derecha"){
-          gondolax = gondola.ubicacionx+gondola.ancho;
-          gondolay = gondola.ubicaciony;
-        } else if(gondola.id === producto.GondolaId && producto.ubicExacta === "izquierda") {
-          gondolax = gondola.ubicacionx-1;
-          gondolay = gondola.ubicaciony+gondola.largo-1;
-        } else if(gondola.id === producto.GondolaId && producto.ubicExacta === "abajo") {
-          gondolax = gondola.ubicacionx;
-          gondolay = gondola.ubicaciony+gondola.largo;
-        } else if(gondola.id === producto.GondolaId && producto.ubicExacta === "arriba") {
-          gondolax = gondola.ubicacionx;
-          gondolay = gondola.ubicaciony-1;
-        } 
-      })
+
+  let gondolax = null;
+  let gondolay = null;
+  if (Array.isArray(gondolas)) {
+  gondolas.forEach((gondola) => {
+    productosSeleccionados.forEach((producto) => {
+      if (gondola.id === producto.GondolaId) {
+        switch (producto.ubicExacta) {
+          case "derecha":
+            gondolax = gondola.ubicacionx + gondola.ancho;
+            gondolay = gondola.ubicaciony;
+            break;
+          case "izquierda":
+            gondolax = gondola.ubicacionx - 1;
+            gondolay = gondola.ubicaciony + gondola.largo - 1;
+            break;
+          case "abajo":
+            gondolax = gondola.ubicacionx;
+            gondolay = gondola.ubicaciony + gondola.largo;
+            break;
+          case "arriba":
+            gondolax = gondola.ubicacionx;
+            gondolay = gondola.ubicaciony - 1;
+            break;
+          default:
+            break;
+        }
+      }
     });
-  
-    return { gondolax, gondolay };
+  });} 
+
+  return { gondolax, gondolay };
+
 }
