@@ -16,7 +16,7 @@ export default function Mapa({ supermercado, productosSeleccionados }) {
   // Obtener la lista de góndolas desde el servidor
   useEffect(() => {
     axios
-      .get(`http://192.168.0.117:3001/gondolas/${supermercado.id}`)
+      .get(`http://192.168.0.109:3001/gondolas/${supermercado.id}`)
       .then((response) => {
         setGondolas(response.data);
       });
