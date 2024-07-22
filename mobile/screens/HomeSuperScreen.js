@@ -11,7 +11,7 @@ export default function HomeSuperScreen({ route }) {
 
   useEffect(() => {
     axios
-      .get(`http://192.168.107.127:3004/clientes/clienteById/${id}`)
+      .get(`http://192.168.0.109:3004/clientes/clienteById/${id}`)
       .then((response) => {
         setCliente(response.data);
       });
