@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import CuadradoBlanco from '../componentes/CuadradoBlanco.js'; 
+import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import '../styles/MapaCompleto.css'
-import EntradaSalida from './EntradaSalida.js';
 
 function UbicGondola() {
 

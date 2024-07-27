@@ -26,8 +26,8 @@
 }
 
 .cuadro-blanco {
-  width: calc(5px * var(--numAncho)); /* Ancho de cada cuadro blanco */
-  height: calc(5px * var(--numLargo)); /* Alto de cada cuadro blanco */
+  width: calc(2px * var(--numAncho)); /* Ancho de cada cuadro blanco */
+  height: calc(2px * var(--numLargo)); /* Alto de cada cuadro blanco */
   background-color: white;
   border: 1px solid black;
   cursor: pointer;

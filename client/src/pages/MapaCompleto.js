@@ -58,10 +58,6 @@ function MapaCompleto() {
         const esSalida = fila === saliday - 1 && columna === salidax - 1;
         const esEntrada = fila === entraday - 1 && columna === entradax - 1;
 
-        const numeroFila = columna === 0 ? <span className="numeroFila">{fila + 1}</span> : null;
-        const numeroColumna = fila === 0 ? <span className="numeroColumna">{columna + 1}</span> : null;
-        const columna0 = columna === 0 ? "columna-0" : "";
-
         const gondolaEnEsteCuadro = gondolas.find((gondola) => {
           return (
             fila + 1 >= gondola.ubicaciony &&

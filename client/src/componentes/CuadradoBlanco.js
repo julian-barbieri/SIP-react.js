@@ -4,8 +4,8 @@ function CuadradoBlanco({ seleccionado, onClick, className }) {
   const estilo = {
     backgroundColor: seleccionado ? 'blue' : 'white',
     border: '1px solid black',
-    width: '30px',
-    height: '30px',
+    width: '25px',
+    height: '25px',
     margin: '2px',
     cursor: 'pointer',
   };

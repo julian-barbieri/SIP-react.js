@@ -55,7 +55,7 @@ function CrearProducto() {
           ubicExacta: ubicExacta,
           GondolaId: gondola,
         };
-        const response = await axiosInstance.post(`http://localhost:3001/productos`, productoData);
+        await axiosInstance.post(`http://localhost:3001/productos`, productoData);
         Swal.fire({
           position: "top",
           icon: "success",

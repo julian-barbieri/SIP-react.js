@@ -1,29 +1,29 @@
-import React, {useState} from 'react';
-import { Link, useParams, useNavigate} from 'react-router-dom';
+import React from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import '../styles/CreateSuper.css';
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import axios from 'axios';
 import Swal from 'sweetalert2';
 import axiosInstance from '../auth/axiosConfig.js';
-
-
+import BackButton from '../componentes/BackButton.js';
+import Title from '../componentes/Title.js';
+import Label from '../componentes/Label.js';
+import GuardarButton from '../componentes/GuardarButton.js';
 
 function CreateSuper() {
 
   let { nombre_usuario } = useParams();
-  const [admin, setAdmin] = useState({});
   let navigate = useNavigate();
   const initialValues = {
-    nombre:"",
-    direccion:"",
-    largo:10,
-    ancho:10,
-    entradax:5,
-    entraday:1,
-    salidax:6,
-    saliday:1,
-}
+    nombre: "",
+    direccion: "",
+    largo: 10,
+    ancho: 10,
+    entradax: 5,
+    entraday: 10,
+    salidax: 6,
+    saliday: 10,
+  }
 
   const validationSchema = Yup.object().shape({
     nombre: Yup.string().required("Campo obligatorio"),
@@ -34,7 +34,7 @@ function CreateSuper() {
     entraday: Yup.number().min(0).required("Campo obligatorio"),
     salidax: Yup.number().min(0).required("Campo obligatorio"),
     saliday: Yup.number().min(0).required("Campo obligatorio"),
-  })
+  });
 
   const crearSuper = async (data) => {
     // Obtener el ID del administrador
@@ -45,7 +45,7 @@ function CreateSuper() {
       ...data,
       AdministradoreId: adminId,
     };
-    const response = await axiosInstance.post(`http://localhost:3001/supermercados`, supermercadoData);
+    await axiosInstance.post(`http://localhost:3001/supermercados`, supermercadoData);
     
     Swal.fire({
       position: "top",
@@ -56,51 +56,70 @@ function CreateSuper() {
     });
     // Navegar a donde desees después de crear el supermercado
     navigate(`/app/${nombre_usuario}`);
-
   }
+
   return (
     <div>
-      <div className="top-bar">
-        <Link to={`/app/${nombre_usuario}`} className="back-link">
-          Volver
-        </Link>
-      </div>
-      <h2>Crear Supermercado</h2>
-      
+      <BackButton />
+      <Title text='Creá tu supermercado' />
       <Formik initialValues={initialValues} onSubmit={crearSuper} validationSchema={validationSchema}>
         <Form>
           <div className="form-group">
-            <ErrorMessage name="nombre" component="span"></ErrorMessage>
-            <Field id="nombre" name="nombre" placeholder="Nombre del supermercado" type="text" className="inputField" />
-            <ErrorMessage name="direccion" component="span"></ErrorMessage>
-            <Field id="direccion" name="direccion" placeholder="Dirección del supermercado" type="text" className="inputField" />
-            <div><label>Largo</label></div>
-            <ErrorMessage name="largo" component="span"></ErrorMessage>
-            <Field id="largo" name="largo" placeholder="Metros de largo" type="number" className="inputField" />
-            <div><label>Ancho</label></div>
-            <ErrorMessage name="ancho" component="span"></ErrorMessage>
-            <Field id="ancho" name="ancho" placeholder="Metros de ancho" type="number" className="inputField" />
-            <div><label>Entrada X</label></div>
-            <ErrorMessage name="entradax" component="span"></ErrorMessage>
-            <Field id="entradax" name="entradax" type="number" className="inputField" />
-            <div><label>Entrada Y</label></div>
-            <ErrorMessage name="entraday" component="span"></ErrorMessage>
-            <Field id="entraday" name="entraday" type="number" className="inputField" />
-            <div><label>Salida X</label></div>
-            <ErrorMessage name="salidax" component="span"></ErrorMessage>
-            <Field id="salidax" name="salidax" type="number" className="inputField" />
-            <div><label>Salida Y</label></div>
-            <ErrorMessage name="saliday" component="span"></ErrorMessage>
-            <Field id="saliday" name="saliday" type="number" className="inputField" />
-            <div className='button-container'>
-              <button type='submit' className="guardarButton">Guardar</button>
+            <div className="column">
+            <div className="form-item">
+                <Label text="Nombre" />
+                <Field id="nombre" name="nombre" placeholder="Ej: Coto" type="text" className="inputField" />
+                <ErrorMessage name="nombre" component="div" className="error-message" />
+              </div>
+              <div className="form-item">
+                <Label text="Dirección" />
+                <Field id="direccion" name="direccion" placeholder="Ej: Av. Santa Fe 1256" type="text" className="inputField" />
+                <ErrorMessage name="direccion" component="div" className="error-message" />
+              </div>
             </div>
+            <div className="column">
+              <div className="form-item">
+                <Label text='Largo' />
+                <Field id="largo" name="largo" placeholder="Metros de largo" type="number" className="inputField" />
+                <ErrorMessage name="largo" component="div" className="error-message" />
+              </div>
+              <div className="form-item">
+                <Label text='Ancho' />
+                <Field id="ancho" name="ancho" placeholder="Metros de ancho" type="number" className="inputField" />
+                <ErrorMessage name="ancho" component="div" className="error-message" />
+              </div>
+            </div>
+
+            <div className="column">
+              <div className="form-item">
+                <Label text='Entrada X' />
+                <Field id="entradax" name="entradax" type="number" className="inputField" />
+                <ErrorMessage name="entradax" component="div" className="error-message" />
+              </div>
+              <div className="form-item">
+                <Label text='Entrada Y' />
+                <Field id="entraday" name="entraday" type="number" className="inputField" />
+                <ErrorMessage name="entraday" component="div" className="error-message" />
+              </div>
+            </div>
+            <div className="column">
+                <div className="form-item">
+                  <Label text='Salida X' />
+                  <Field id="salidax" name="salidax" type="number" className="inputField" />
+                  <ErrorMessage name="salidax" component="div" className="error-message" />
+                </div>
+                <div className="form-item">
+                  <Label text='Salida Y' />
+                  <Field id="saliday" name="saliday" type="number" className="inputField" />
+                  <ErrorMessage name="saliday" component="div" className="error-message" />
+                </div>
+              </div>
           </div>
+          <GuardarButton />
         </Form>
       </Formik>
     </div>
   );
 }
-
 
 export default CreateSuper;

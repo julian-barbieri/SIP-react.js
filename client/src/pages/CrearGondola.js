@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import '../styles/CrearGondola.css';
 import * as Yup from 'yup';
@@ -34,7 +34,7 @@ function CrearGondola() {
             SupermercadoId: id,
         };
         
-        const response = await axiosInstance.post(`http://localhost:3001/gondolas`, gondolaData);
+        await axiosInstance.post(`http://localhost:3001/gondolas`, gondolaData);
         Swal.fire({
           position: "top",
           icon: "success",

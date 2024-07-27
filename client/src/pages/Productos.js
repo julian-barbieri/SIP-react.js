@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import '../styles/Productos.css';
-import { round } from 'mathjs/number'
 import Swal from 'sweetalert2';
 import axiosInstance from '../auth/axiosConfig.js';
 

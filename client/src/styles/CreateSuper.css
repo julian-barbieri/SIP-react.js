@@ -6,25 +6,50 @@ h2 {
 }
 
 .form-group {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr; /* Dos columnas iguales */
+  gap: 0px; /* Espacio entre columnas */
   margin-bottom: 20px;
+  margin-top: 40px;
+  margin-right: 20px;
+}
+
+.form-group .column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-item {
+  display: flex;
+  width: 100%;
+  margin-bottom: 20px;
+  flex-direction: column; /* Cambia a columna para apilar elementos verticalmente */
+  align-items: center;
+  position: relative;
 }
 
 label {
-  display: block;
-  font-size: 16px;
-  margin-bottom: 8px;
+  width: 100px; /* Ajusta el ancho del label según sea necesario */
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  position: absolute; /* Permite que el mensaje de error se superponga */
+  bottom: -8px; /* Ajusta según sea necesario para la distancia entre el campo y el mensaje */
 }
 
 input[type="text"],
 input[type="number"] {
-  width: 40%;
-  padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  width: 70%;
+  align-items: right;
 }
 
-.entradaSalidaButton{
+.entradaSalidaButton {
   background-color: #fff700f6;
   color: #000000;
   font-size: 16px;
@@ -33,45 +58,11 @@ input[type="number"] {
   border-radius: 5px;
   cursor: pointer;
   margin-right: 10px;
-  margin-top: 10px; 
-}
-.guardarButton {
-  text-align: center;
-  background-color: #007bff;
-  color: #fff;
-  font-size: 16px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-right: 10px;
-  margin-top: 10px; 
+  margin-top: 10px;
 }
 
 .entradaSalidaButton:hover {
   background-color: #def700;
-}
-.guardarButton:hover {
-  background-color: #0600b3;
-}
-
-/* Estilos para el enlace */
-.back-link {
-  font-size: 16px;
-  color: #007bff;
-  text-decoration: none;
-  margin-right: 20px;
-  margin-left: 25px;
-  text-align: left;
-  display: flex;
-  width: 5%;
-}
-
-.back-link:hover {
-  text-decoration: underline;
-}
-.button-container {
-  text-align: center; /* Centra el contenido horizontalmente */
 }
 
 .bold-text {

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Link, RedirectFunction } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import '../styles/Register.css';
 import * as Yup from 'yup';

@@ -22,7 +22,7 @@ function App() {
    
   return (
     <div className="App">
-      <img className="Logo" src={logo} />
+      <img className="Logo" src={logo} alt='Market List logo' />
       <Router>
         <Routes>
           <Route path='/login' exact Component={Login}/>

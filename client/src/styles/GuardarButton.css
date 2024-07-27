@@ -1,0 +1,20 @@
+.guardarButton {
+    text-align: center;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top: 10px; 
+  }
+
+  .guardarButton:hover {
+    background-color: #0600b3;
+  }
+
+  .button-container {
+    text-align: center; /* Centra el contenido horizontalmente */
+  }

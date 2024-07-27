@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axiosInstance from '../auth/axiosConfig.js';
 import '../styles/Welcome.css'; // Importa un archivo de estilos para Welcome
 
