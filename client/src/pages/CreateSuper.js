@@ -1,17 +1,14 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../styles/CreateSuper.css';
-import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
-import Swal from 'sweetalert2';
 import axiosInstance from '../auth/axiosConfig.js';
 import BackButton from '../componentes/BackButton.js';
 import Title from '../componentes/Title.js';
-import Label from '../componentes/Label.js';
 import GuardarButton from '../componentes/GuardarButton.js';
-import Input from '../componentes/Input.js';
-import ErrorMsg from '../componentes/ErrorMsg.js';
 import CompleteField from '../componentes/CompleteField.js';
+import validationSchema from '../validation/validationSchema'; 
+import SwalAlert from '../componentes/SwalAlert.js';
 
 function CreateSuper() {
 
@@ -28,38 +25,25 @@ function CreateSuper() {
     saliday: 10,
   }
 
-  const validationSchema = Yup.object().shape({
-    nombre: Yup.string().required("Campo obligatorio"),
-    direccion: Yup.string().min(3).max(30).required("Campo obligatorio"),
-    largo: Yup.number().min(1).required("Campo obligatorio"),
-    ancho: Yup.number().min(1).required("Campo obligatorio"),
-    entradax: Yup.number().min(0).required("Campo obligatorio"),
-    entraday: Yup.number().min(0).required("Campo obligatorio"),
-    salidax: Yup.number().min(0).required("Campo obligatorio"),
-    saliday: Yup.number().min(0).required("Campo obligatorio"),
-  });
-
   const crearSuper = async (data) => {
-    // Obtener el ID del administrador
-    const adminResponse = await axiosInstance.get(`http://localhost:3001/administradores/adminByUsername/${nombre_usuario}`);
-    const adminId = adminResponse.data.id;
+    try {
+      const adminResponse = await axiosInstance.get(`http://localhost:3001/administradores/adminByUsername/${nombre_usuario}`);
+      const adminId = adminResponse.data.id;
 
-    const supermercadoData = {
-      ...data,
-      AdministradoreId: adminId,
-    };
-    await axiosInstance.post(`http://localhost:3001/supermercados`, supermercadoData);
-    
-    Swal.fire({
-      position: "top",
-      icon: "success",
-      title: "Supermercado creado",
-      showConfirmButton: true,
-      timer: 2500
-    });
-    // Navegar a donde desees después de crear el supermercado
-    navigate(`/app/${nombre_usuario}`);
-  }
+      const supermercadoData = {
+        ...data,
+        AdministradoreId: adminId,
+      };
+
+      await axiosInstance.post(`http://localhost:3001/supermercados`, supermercadoData);
+
+      SwalAlert('success', 'Supermercado creado', ''); // Usa el componente SwalAlert
+      
+      navigate(`/app/${nombre_usuario}`);
+    } catch (error) {
+      SwalAlert('error', 'Error al crear supermercado', error.message); // Maneja el error usando el componente SwalAlert
+    }
+  };
 
   return (
     <div>
