@@ -47,7 +47,7 @@ function CreateSuper() {
 
   return (
     <div>
-      <BackButton />
+      <BackButton to={`app/${nombre_usuario}`}/>
       <Title text='Creá tu supermercado' />
       <Formik initialValues={initialValues} onSubmit={crearSuper} validationSchema={validationSchema}>
         <Form>

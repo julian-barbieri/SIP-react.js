@@ -1,38 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axiosInstance from '../auth/axiosConfig.js';
-import '../styles/Welcome.css'; // Importa un archivo de estilos para Welcome
+import '../styles/Welcome.css';
+import Title from '../componentes/Title.js';
+import Button from '../componentes/Button.js';
+import { AiOutlineHome } from "react-icons/ai";
+import { IoIosBasket } from "react-icons/io";
+import { CiGrid2H } from "react-icons/ci";
+import { FaMapMarkerAlt } from 'react-icons/fa';
 
 function Welcome() {
   const [supermercado, setSupermercado] = useState({});
-  let { id } = useParams();
-  let { nombre_usuario } = useParams();
+  let { id, nombre_usuario } = useParams();
+
   useEffect(() => {
     axiosInstance.get(`http://localhost:3001/supermercados/superById/${id}`).then((response) => {
       setSupermercado(response.data);
     });
-  }, []);
+  }, [id]);
 
   return (
-    <div className='welcome-container'>
-      <div className="top-bar">
-        <Link to={`/app/${nombre_usuario}`} className="back-link">
-          Volver
-        </Link>
-      </div>
-      <h2 className='welcome-title'>
-        Supermercado <br></br> {supermercado.nombre} - {supermercado.direccion}
-      </h2>
+    <div>
+      <Title text={`${supermercado.nombre} - ${supermercado.direccion}`} />
       <div className='button-container'>
-        <Link to={`/welcome/${id}/${nombre_usuario}/mapa`} className='welcome-button'>
-          Mapa
-        </Link>
-        <Link to={`/welcome/${id}/${nombre_usuario}/producto`} className='welcome-button'>
-          Productos
-        </Link>
-        <Link to={`/welcome/${id}/${nombre_usuario}/gondolas`} className='welcome-button'>
-          Góndolas
-        </Link>
+        <Button to={`/app/${nombre_usuario}`} text="Home" logo={<AiOutlineHome size={32}/>}/>
+        <Button to={`/welcome/${id}/${nombre_usuario}/mapa`} text="Mapa" logo={<FaMapMarkerAlt  size={32}/>}/>
+        <Button to={`/welcome/${id}/${nombre_usuario}/producto`} text="Productos" logo={<IoIosBasket size={32}/>}/>
+        <Button to={`/welcome/${id}/${nombre_usuario}/gondolas`} text="Góndolas"  logo={<CiGrid2H size={32}/>}/>
       </div>
     </div>
   );

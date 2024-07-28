@@ -6,6 +6,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import MapaCompleto from './MapaCompleto.js';
 import axiosInstance from '../auth/axiosConfig.js';
 import Swal from 'sweetalert2';
+import validationSchema from '../validation/validationSchema.js';
 
 function CrearGondola() {
     let navigate = useNavigate();
@@ -19,14 +20,6 @@ function CrearGondola() {
         ubicacionx:1,
         ubicaciony:1
     }
-    const validationSchema = Yup.object().shape({
-        codigo: Yup.string().required("Campo obligatorio"),
-        categoria: Yup.string().min(3).max(15).required("Campo obligatorio"),
-        largo: Yup.number().min(1).required("Campo obligatorio"),
-        ancho: Yup.number().min(1).required("Campo obligatorio"),
-        ubicacionx: Yup.number().min(1).required("Campo obligatorio"),
-        ubicaciony: Yup.number().min(1).required("Campo obligatorio")
-    })
     const crearGondola = async (data) => {
         
         const gondolaData = {

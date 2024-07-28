@@ -9,6 +9,10 @@ const validationSchema = Yup.object().shape({
   entraday: Yup.number().min(0).required("Campo obligatorio"),
   salidax: Yup.number().min(0).required("Campo obligatorio"),
   saliday: Yup.number().min(0).required("Campo obligatorio"),
+  codigo: Yup.string().required("Campo obligatorio"),
+  categoria: Yup.string().min(3).max(15).required("Campo obligatorio"),
+  ubicacionx: Yup.number().min(1).required("Campo obligatorio"),
+  ubicaciony: Yup.number().min(1).required("Campo obligatorio")
 });
 
 export default validationSchema;

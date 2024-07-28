@@ -3,13 +3,13 @@ import {useNavigate} from 'react-router-dom';
 import '../styles/BackButton.css';
 import { BsArrowLeftCircle } from "react-icons/bs";
 
-function BackButton() {
+function BackButton({to}) {
     let navigation = useNavigate();
     return(
         <div className="container-back-link">
             <BsArrowLeftCircle 
                 className="back-link"
-                onClick={() =>  navigation(-1)} 
+                onClick={() =>  navigation(to)} 
                 size={32} 
             />
         </div>
