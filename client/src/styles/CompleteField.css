@@ -1,0 +1,8 @@
+.form-item {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+    flex-direction: column; /* Cambia a columna para apilar elementos verticalmente */
+    align-items: center;
+    position: relative;
+  }

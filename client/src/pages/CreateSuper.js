@@ -2,13 +2,16 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../styles/CreateSuper.css';
 import * as Yup from 'yup';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import Swal from 'sweetalert2';
 import axiosInstance from '../auth/axiosConfig.js';
 import BackButton from '../componentes/BackButton.js';
 import Title from '../componentes/Title.js';
 import Label from '../componentes/Label.js';
 import GuardarButton from '../componentes/GuardarButton.js';
+import Input from '../componentes/Input.js';
+import ErrorMsg from '../componentes/ErrorMsg.js';
+import CompleteField from '../componentes/CompleteField.js';
 
 function CreateSuper() {
 
@@ -66,54 +69,21 @@ function CreateSuper() {
         <Form>
           <div className="form-group">
             <div className="column">
-            <div className="form-item">
-                <Label text="Nombre" />
-                <Field id="nombre" name="nombre" placeholder="Ej: Coto" type="text" className="inputField" />
-                <ErrorMessage name="nombre" component="div" className="error-message" />
-              </div>
-              <div className="form-item">
-                <Label text="Dirección" />
-                <Field id="direccion" name="direccion" placeholder="Ej: Av. Santa Fe 1256" type="text" className="inputField" />
-                <ErrorMessage name="direccion" component="div" className="error-message" />
-              </div>
+              <CompleteField text={"Nombre"} id={"nombre"} name={"nombre"} placeholder={"Ej: Coto"} type={"text"} />
+              <CompleteField text={"Dirección"} id={"direccion"} name={"direccion"} placeholder={"Ej: Av. Santa Fe 1256"} type={"text"} />
             </div>
             <div className="column">
-              <div className="form-item">
-                <Label text='Largo' />
-                <Field id="largo" name="largo" placeholder="Metros de largo" type="number" className="inputField" />
-                <ErrorMessage name="largo" component="div" className="error-message" />
-              </div>
-              <div className="form-item">
-                <Label text='Ancho' />
-                <Field id="ancho" name="ancho" placeholder="Metros de ancho" type="number" className="inputField" />
-                <ErrorMessage name="ancho" component="div" className="error-message" />
-              </div>
-            </div>
-
-            <div className="column">
-              <div className="form-item">
-                <Label text='Entrada X' />
-                <Field id="entradax" name="entradax" type="number" className="inputField" />
-                <ErrorMessage name="entradax" component="div" className="error-message" />
-              </div>
-              <div className="form-item">
-                <Label text='Entrada Y' />
-                <Field id="entraday" name="entraday" type="number" className="inputField" />
-                <ErrorMessage name="entraday" component="div" className="error-message" />
-              </div>
+              <CompleteField text={"Largo"} id={"largo"} name={"largo"} placeholder={"Metros de largo"} type={"number"} />
+              <CompleteField text={"Ancho"} id={"ancho"} name={"ancho"} placeholder={"Metros de ancho"} type={"number"} />
             </div>
             <div className="column">
-                <div className="form-item">
-                  <Label text='Salida X' />
-                  <Field id="salidax" name="salidax" type="number" className="inputField" />
-                  <ErrorMessage name="salidax" component="div" className="error-message" />
-                </div>
-                <div className="form-item">
-                  <Label text='Salida Y' />
-                  <Field id="saliday" name="saliday" type="number" className="inputField" />
-                  <ErrorMessage name="saliday" component="div" className="error-message" />
-                </div>
-              </div>
+              <CompleteField text={"Entrada X"} id={"entradax"} name={"entradax"} placeholder={null} type={"number"} />
+              <CompleteField text={"Entrada Y"} id={"entraday"} name={"entraday"} placeholder={null} type={"number"} />
+            </div>
+            <div className="column">
+              <CompleteField text={"Salida X"} id={"salidax"} name={"salidax"} placeholder={null} type={"number"} />
+              <CompleteField text={"Salida Y"} id={"saliday"} name={"saliday"} placeholder={null} type={"number"} />
+            </div>
           </div>
           <GuardarButton />
         </Form>
