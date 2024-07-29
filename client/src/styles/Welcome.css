@@ -11,20 +11,3 @@
   flex-direction: column;
   align-items: center;
 }
-
-.welcome-button {
-  display: inline-block;
-  padding: 10px 20px;
-  margin: 5px;
-  background-color: #007bff; /* Color de fondo del botón (puedes cambiarlo) */
-  color: #fff; /* Color del texto del botón */
-  text-decoration: none;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.welcome-button:hover {
-  background-color: #0056b3; /* Color de fondo al pasar el mouse (puedes cambiarlo) */
-}

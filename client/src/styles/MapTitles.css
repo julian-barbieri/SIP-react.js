@@ -1,0 +1,15 @@
+.titulos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.fila {
+  display: flex;
+  align-items: baseline;
+  justify-content: center; /* Alinea elementos al inicio de la fila */
+  width: 15%; /* Asegura que las filas ocupen todo el ancho */
+  max-width: 400px; /* Ajusta esto al tamaño máximo que quieres para el contenido */
+  margin-bottom: 10px;
+}

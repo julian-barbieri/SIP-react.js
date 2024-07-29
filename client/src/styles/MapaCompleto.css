@@ -1,14 +1,4 @@
-
 /* mapa.css */
-
-.container-mapa{
-  text-align: center;
-  padding: 20px;
-  background-color: #f5f5f5;
-  max-width: 400px;
-  margin: 0 auto;
-  margin-top: 20px;
-}
 
 :root {
   --numAncho: 0;
@@ -54,11 +44,6 @@
   width: fit-content; /* Para alinear los elementos a la izquierda */
 }
 
-
-.cuadro-seleccionado {
-  background-color: blue; /* Color cuando está seleccionado */
-}
-
 .entrada{
   color: green;
 }
@@ -75,26 +60,4 @@
   color: blue;
   font-weight: bold;
   width: fit-content;
-}
-
-.titulos{
-  display: flex;
-  text-align: center;
-  justify-content: space-evenly;
-  
-}
-
-.gondolas {
-  /* Aplicar estilos de diseño flexbox */
-  display: grid;
-  /* Especificar el tamaño de la columna y el espacio entre elementos */
-  grid-template-columns: repeat(auto-fill, minmax(140px, 2fr));
-  gap: 5px; /* Espacio entre elementos */
-}
-
-li {
-  /* Agregar margen inferior entre elementos de la lista */
-  margin: 5px;
-  background-color: #f0f0f0;
-  list-style-type: none; /* Puedes ajustar este valor según sea necesario */
 }

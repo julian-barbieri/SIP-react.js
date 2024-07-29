@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import CuadradoBlanco from '../componentes/CuadradoBlanco.js'; 
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axiosInstance from '../auth/axiosConfig.js';
 import '../styles/MapaCompleto.css';
+import BackButton from '../componentes/BackButton.js';
+import Title from '../componentes/Title.js';
+import ListaGondolas from '../componentes/ListaGondolas';
+import Mapa from '../componentes/Mapa';
+import MapTitles from '../componentes/MapTitles';
 
 function MapaCompleto() {
-  const { id } = useParams();
-  const { nombre_usuario } = useParams();
+  const { id, nombre_usuario } = useParams();
   const [cuadrosSeleccionados, setCuadrosSeleccionados] = useState([]);
   const [gondolas, setGondolas] = useState([]);
   const [entraday, setEntraday] = useState(5);
@@ -50,72 +53,26 @@ function MapaCompleto() {
     setCuadrosSeleccionados(nuevaCuadricula);
   };
 
-  const renderCuadros = () => {
-    const cuadros = [];
-  
-    for (let fila = 0; fila < numLargo; fila++) {
-      for (let columna = 0; columna < numAncho; columna++) {
-        const esSalida = fila === saliday - 1 && columna === salidax - 1;
-        const esEntrada = fila === entraday - 1 && columna === entradax - 1;
-
-        const gondolaEnEsteCuadro = gondolas.find((gondola) => {
-          return (
-            fila + 1 >= gondola.ubicaciony &&
-            fila + 1 < gondola.ubicaciony + gondola.largo &&
-            columna + 1 >= gondola.ubicacionx &&
-            columna + 1 < gondola.ubicacionx + gondola.ancho
-          );
-        });
-
-        const estiloCuadro = `
-        cuadro-container
-        ${gondolaEnEsteCuadro ? 'gondolaOcupada' : ''}
-        ${esSalida ? 'salida' : ''}
-        ${esEntrada ? 'entrada' : ''}
-        `.trim();
-
-        cuadros.push(
-          <div key={`${fila}-${columna}`} className={estiloCuadro}>
-            {gondolaEnEsteCuadro && fila + 1 === gondolaEnEsteCuadro.ubicaciony && columna + 1 === gondolaEnEsteCuadro.ubicacionx && (
-              <div key={gondolaEnEsteCuadro.id} className='idGondola'>{gondolaEnEsteCuadro.codigo}</div>
-            )}
-            <div className='numerosColumna'>{fila === 0 ? `${columna + 1}` : ""} </div>
-            <div className='numerosFila'>{columna === 0 ? `${fila + 1}` : ""}</div>
-            <div className='cuadrados'>
-              <CuadradoBlanco
-                className={estiloCuadro}
-                onClick={() => toggleCuadro(fila, columna)}
-              />
-            </div>
-          </div>
-        );
-      }
-    }
-  
-    return cuadros;
-  };
-
   return (
-    <div className='container-mapa'>
-      <div className="top-bar">
-        <Link to={`/welcome/${id}/${nombre_usuario}`} className="back-link">
-          Volver
-        </Link>
-      </div>
-      <h2>Mapa del Supermercado</h2>
-      <div className='titulos'>
-        <h4 className='entrada'>Entrada</h4>
-        <h4 className='salida'>Salida</h4>
-        <h4 className='gondolaOcupada'>Góndolas</h4>
-      </div>
-      <div className="cuadricula">
-        {renderCuadros()}
-      </div>
-      <div className='gondolas'>
-        {gondolas.map(gondola => (
-          <li key={gondola.id}>{gondola.codigo}: {gondola.categoria}</li>
-        ))}
-      </div>
+    <div>
+      <BackButton to={`/welcome/${id}/${nombre_usuario}`} />
+      <Title text={"Mapa del Supermercado"} />
+
+      <MapTitles />
+
+      <Mapa
+        numLargo={numLargo}
+        numAncho={numAncho}
+        cuadrosSeleccionados={cuadrosSeleccionados}
+        gondolas={gondolas}
+        entraday={entraday}
+        entradax={entradax}
+        saliday={saliday}
+        salidax={salidax}
+        toggleCuadro={toggleCuadro}
+      />
+
+      <ListaGondolas gondolas={gondolas} />
     </div>
   );
 }

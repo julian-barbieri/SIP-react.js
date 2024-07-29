@@ -7,7 +7,6 @@ function CuadradoBlanco({ seleccionado, onClick, className }) {
     width: '25px',
     height: '25px',
     margin: '2px',
-    cursor: 'pointer',
   };
 
   if (className && className.includes('entrada')) {

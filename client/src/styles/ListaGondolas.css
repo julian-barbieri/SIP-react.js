@@ -1,0 +1,14 @@
+.gondolas {
+    /* Aplicar estilos de diseño flexbox */
+    display: grid;
+    /* Especificar el tamaño de la columna y el espacio entre elementos */
+    grid-template-columns: repeat(auto-fill, minmax(140px, 2fr));
+    gap: 5px; /* Espacio entre elementos */
+  }
+  
+  li {
+    /* Agregar margen inferior entre elementos de la lista */
+    margin: 5px;
+    background-color: #f0f0f0;
+    list-style-type: none; /* Puedes ajustar este valor según sea necesario */
+  }

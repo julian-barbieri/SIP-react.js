@@ -1,8 +1,13 @@
-.label{
-    font-size: 16px;
-    margin-bottom: 8px;
+.label {
+  font-size: 16px;
+  margin-right: 10px;
+  align-items: center;
 }
 
-.container-label{
-    text-align: center;
+.container-label {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
 }
