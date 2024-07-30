@@ -2,7 +2,7 @@
     color: red;
     font-size: 12px;
     position: absolute; /* Permite que el mensaje de error se superponga */
-    bottom: -8px; /* Ajusta según sea necesario para la distancia entre el campo y el mensaje */
+    bottom: -12px; /* Ajusta según sea necesario para la distancia entre el campo y el mensaje */
   }
 
 .container-errorMessage {

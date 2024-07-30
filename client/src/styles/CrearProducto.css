@@ -1,43 +1,69 @@
-.container-crear-producto{
-    text-align: center;
-    padding: 20px;
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    margin: 0 auto;
-    margin-top: 20px;
+.container-crear-producto {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  max-width: 900px; /* Ajusta según sea necesario */
 }
 
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.row > * {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.form-mapa-container {
+  display: flex;
+  width: 100%;
+}
+
+.formulario, .mapa {
+  flex: 1;
+  padding: 10px;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+}
 
 .form-group {
-    margin-bottom: 20px;
-  }
-  
-  .inputField {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .button-container {
-    margin-top: 20px;
-  }
-  
-  .ubicProductoButton,
-  .guardarButton {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .bold-text {
-    font-weight: bold;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Añadir espacio entre los elementos */
+  margin-bottom: 20px;
+}
 
-  
+.inputField {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.button-container {
+  margin-top: 20px;
+}
+
+.ubicProductoButton,
+.guardarButton {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.bold-text {
+  font-weight: bold;
+}

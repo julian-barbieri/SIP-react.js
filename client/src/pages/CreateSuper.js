@@ -9,21 +9,13 @@ import GuardarButton from '../componentes/GuardarButton.js';
 import CompleteField from '../componentes/CompleteField.js';
 import validationSchema from '../validation/validationSchema'; 
 import SwalAlert from '../componentes/SwalAlert.js';
+import initialValues from '../componentes/initialValues.js';
 
 function CreateSuper() {
 
   let { nombre_usuario } = useParams();
   let navigate = useNavigate();
-  const initialValues = {
-    nombre: "",
-    direccion: "",
-    largo: 10,
-    ancho: 10,
-    entradax: 5,
-    entraday: 10,
-    salidax: 6,
-    saliday: 10,
-  }
+  
 
   const crearSuper = async (data) => {
     try {
