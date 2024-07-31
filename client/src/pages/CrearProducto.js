@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Formik, Form, ErrorMessage } from 'formik';
+import validationSchemaProducto from '../validations/validationSchemaProducto.js'; 
 import Select from 'react-select';
 import Swal from "sweetalert2";
 import axiosInstance from '../auth/axiosConfig.js';
 import Title from '../componentes/Title.js';
 import Mapa from '../componentes/Mapa.js';
 import BackButton from "../componentes/BackButton.js";
-import validationSchema from "../validation/validationSchema.js";
 import ubicOptions from "../componentes/ubicOptions.js";
 import '../styles/CrearProducto.css';
 import initialValues from '../componentes/initialValues.js';
@@ -103,7 +103,7 @@ function CrearProducto() {
       <div>
         <div className="form-mapa-container">
           <div className="formulario">
-            <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+            <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchemaProducto}>
               <Form>
                 <div className="form-group">
                   <div className='row'>

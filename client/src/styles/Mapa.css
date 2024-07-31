@@ -1,0 +1,9 @@
+.cuadricula {
+    background-color: #fff; /* Opcional: fondo blanco para el mapa */
+    border: 1px solid #ddd; /* Opcional: borde para el mapa */
+    border-radius: 8px; /* Opcional: borde redondeado para el mapa */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Opcional: sombra para el mapa */
+    margin: 0 auto; /* Centrarse dentro del contenedor */
+    max-width: 50%;
+}

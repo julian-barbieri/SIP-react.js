@@ -1,25 +1,51 @@
-import React from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import '../styles/CrearGondola.css';
-import * as Yup from 'yup';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import MapaCompleto from './MapaCompleto.js';
+import validationSchemaGondola from '../validations/validationSchemaGondola.js';
+import { Formik, Form } from 'formik';
+import Mapa from '../componentes/Mapa.js';
 import axiosInstance from '../auth/axiosConfig.js';
-import Swal from 'sweetalert2';
-import validationSchema from '../validation/validationSchema.js';
+import SwalAlert from '../componentes/SwalAlert.js';
+import BackButton from '../componentes/BackButton.js';
+import initialValuesGondola from '../initialValues/initialValuesGondola.js';
+import CompleteField from '../componentes/CompleteField.js';
+import GuardarButton from '../componentes/GuardarButton.js';
 
 function CrearGondola() {
     let navigate = useNavigate();
-    let { nombre_usuario } = useParams();
-    let { id } = useParams();
-    const initialValues = {
-        codigo:"",
-        categoria:"",
-        largo:1,
-        ancho:1,
-        ubicacionx:1,
-        ubicaciony:1
-    }
+    let { nombre_usuario, id } = useParams();
+    const [gondolas, setGondolas] = useState([]);
+    const [cuadrosSeleccionados, setCuadrosSeleccionados] = useState([]);
+    const [numAncho, setNumAncho] = useState(10);
+    const [numLargo, setNumLargo] = useState(10);  
+    const [entradax, setEntradax] = useState(5);
+    const [entraday, setEntraday] = useState(5);
+    const [salidax, setSalidax] = useState(5);
+    const [saliday, setSaliday] = useState(5);
+
+    useEffect(() => {
+      axiosInstance.get(`http://localhost:3001/gondolas/${id}`).then((response) => {
+        setGondolas(response.data);
+      });
+      axiosInstance.get(`http://localhost:3001/supermercados/superById/${id}`).then((response) => {
+        setNumLargo(response.data.largo);
+        setNumAncho(response.data.ancho);
+        setEntradax(response.data.entradax);
+        setEntraday(response.data.entraday);
+        setSalidax(response.data.salidax);
+        setSaliday(response.data.saliday);
+  
+        document.documentElement.style.setProperty('--numAncho', response.data.ancho);
+        document.documentElement.style.setProperty('--numLargo', response.data.largo);
+  
+        const nuevaMatriz = [];
+        for (let fila = 0; fila < response.data.largo; fila++) {
+          nuevaMatriz.push(new Array(response.data.ancho).fill(0));
+        }
+        setCuadrosSeleccionados(nuevaMatriz);
+      });
+    }, [id]);
+  
     const crearGondola = async (data) => {
         
         const gondolaData = {
@@ -28,64 +54,57 @@ function CrearGondola() {
         };
         
         await axiosInstance.post(`http://localhost:3001/gondolas`, gondolaData);
-        Swal.fire({
-          position: "top",
-          icon: "success",
-          title: "Góndola creada",
-          showConfirmButton: true,
-          timer: 2500
-        });
+        SwalAlert('success', 'Góndola creada', '');
         navigate(`/welcome/${id}/${nombre_usuario}/gondolas`);
     }
     
-    return(
-        <div className='container-crear-gondola'>
-          <div className="top-bar">
-            <Link to={`/welcome/${id}/${nombre_usuario}/gondolas`} className="back-link">
-              Volver
-            </Link>
-          </div>
-        <div className="titulo-gondola">Crea la góndola</div>
-        <div className="container">
-          {/* Columna izquierda: formulario */}
-          <div className="form-container">
-            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={crearGondola}>
+    return (
+        <div>
+          <BackButton to={`/welcome/${id}/${nombre_usuario}/gondolas`}/>
+          <div className="titulo-gondola">Crea la góndola</div>
+          <div className="container-gondola">
+            {/* Columna izquierda: formulario */}
+            <div className="form-container-gondola">
+            <Formik initialValues={initialValuesGondola} validationSchema={validationSchemaGondola} onSubmit={crearGondola}>
               <Form>
-                {/* ... (tus campos de formulario existentes) */}
-                <ErrorMessage name="codigo" component="span"></ErrorMessage>
-                <Field id="codigo" name="codigo" placeholder="ID de la góndola" type="text" className="inputField" />
-                <ErrorMessage name="categoria" component="span"></ErrorMessage>
-                <Field id="categoria" name="categoria" placeholder="Categoria de la góndola" type="text" className="inputField" />
-                <div><label>Largo de la góndola</label></div>
-                <ErrorMessage name="largo" component="span"></ErrorMessage>
-                <Field id="largo" name="largo" placeholder="Metros de largo" type="number" className="inputField" />
-                <div><label>Ancho de la góndola</label></div>
-                <ErrorMessage name="ancho" component="span"></ErrorMessage>
-                <Field id="ancho" name="ancho" placeholder="Metros de ancho" type="number" className="inputField" />
-                
-                <div><label>Fila de la góndola:</label></div>
-                <ErrorMessage name="ubicaciony" component="span"></ErrorMessage>
-                <Field id="ubicaciony" name="ubicaciony" type="number" className="inputField" />
-                
-                <div><label>Columna de la góndola:</label></div>
-                <ErrorMessage name="ubicacionx" component="span"></ErrorMessage>
-                <Field id="ubicacionx" name="ubicacionx" type="number" className="inputField" />
-                <div className='button-container'>
-                  <button type="submit" className="guardarButton">
-                    Guardar
-                  </button>
+                <div className="row">
+                  <CompleteField text={null} id={"codigo"} name={"codigo"} placeholder={"ID de la góndola"} type={"number"}/>
+                  <CompleteField text={null} id={"categoria"} name={"categoria"} placeholder={"Categoria de la góndola"} type={"text"}/>
                 </div>
+                <div className="column">
+                  <div className="row">
+                    <div className="column-left">
+                      <CompleteField text={"Largo de la góndola"} id={"largo"} name={"largo"} placeholder={"Metros de largo"} type={"number"}/>
+                      <CompleteField text={"Ancho de la góndola"} id={"ancho"} name={"ancho"} placeholder={"Metros de ancho"} type={"number"}/>
+                    </div>
+                    <div className="column-right">
+                      <CompleteField text={"Fila"} id={"ubicaciony"} name={"ubicaciony"} placeholder={"Fila de la góndola"} type={"number"}/>
+                      <CompleteField text={"Columna"} id={"ubicacionx"} name={"ubicacionx"} placeholder={"Columna de la góndola"} type={"number"}/>
+                    </div>
+                  </div>
+                </div>
+                <GuardarButton />
               </Form>
             </Formik>
-          </div>
-  
-          {/* Columna derecha: mapa */}
-          <div className="map-container">
-            <MapaCompleto />
+
+            </div>
+    
+            {/* Columna derecha: mapa */}
+            <div className="map-container">
+              <Mapa 
+                numLargo={numLargo}
+                numAncho={numAncho}
+                cuadrosSeleccionados={cuadrosSeleccionados}
+                gondolas={gondolas}
+                entraday={entraday}
+                entradax={entradax}
+                saliday={saliday}
+                salidax={salidax}
+              />
+            </div>
           </div>
         </div>
-      </div>
-    )
+    );
 }
 
-export default CrearGondola
+export default CrearGondola;

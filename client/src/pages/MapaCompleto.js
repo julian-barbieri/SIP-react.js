@@ -42,17 +42,6 @@ function MapaCompleto() {
     });
   }, [id]);
 
-  const toggleCuadro = (fila, columna) => {
-    const nuevaCuadricula = [...cuadrosSeleccionados];
-    for (let i = 0; i < numLargo; i++) {
-      for (let j = 0; j < numAncho; j++) {
-        nuevaCuadricula[i][j] = 0;
-      }
-    }
-    nuevaCuadricula[fila][columna] = 1;
-    setCuadrosSeleccionados(nuevaCuadricula);
-  };
-
   return (
     <div>
       <BackButton to={`/welcome/${id}/${nombre_usuario}`} />
@@ -69,7 +58,6 @@ function MapaCompleto() {
         entradax={entradax}
         saliday={saliday}
         salidax={salidax}
-        toggleCuadro={toggleCuadro}
       />
 
       <ListaGondolas gondolas={gondolas} />

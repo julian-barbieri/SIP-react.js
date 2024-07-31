@@ -1,7 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 import CuadradoBlanco from '../componentes/CuadradoBlanco.js';
+import '../styles/Mapa.css'
 
-function Mapa({ numLargo, numAncho, cuadrosSeleccionados, gondolas, entraday, entradax, saliday, salidax, toggleCuadro }) {
+function Mapa({ numLargo, numAncho, gondolas, entraday, entradax, saliday, salidax }) {
+  const [cuadrosSeleccionados, setCuadrosSeleccionados] = useState(
+    Array(numLargo).fill().map(() => Array(numAncho).fill(0))
+  );
+
+  const toggleCuadro = (fila, columna) => {
+    const nuevaCuadricula = cuadrosSeleccionados.map((filaArray, filaIndex) =>
+      filaArray.map((col, colIndex) => (filaIndex === fila && colIndex === columna ? 1 : 0))
+    );
+    setCuadrosSeleccionados(nuevaCuadricula);
+  };
   const renderCuadros = () => {
     const cuadros = [];
   
