@@ -60,6 +60,25 @@ router.get("/superById/:id", async (req, res) =>{
     res.json(supermercado);
 });
 
+//delete supermercado
+
+router.delete("/:id", async (req, res) => {
+    try {
+        const superId = req.params.id;
+        const supermercado = await Supermercados.findByPk(superId);
+        
+        if (!supermercado) {
+            return res.status(404).json({ error: "Supermercado no encontrado" });
+        }
+        
+        await supermercado.destroy(); // Eliminar el supermercado de la base de datos
+        res.status(204).send(); // Enviar una respuesta vacía con el código de estado 204 (No Content)
+    } catch (error) {
+        console.error("Error al eliminar el supermercado por ID:", error);
+        res.status(500).json({ error: "Error del servidor" });
+    }
+});
+
 
 
 

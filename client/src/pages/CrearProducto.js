@@ -12,6 +12,7 @@ import ubicOptions from "../componentes/ubicOptions.js";
 import '../styles/CrearProducto.css';
 import initialValues from '../componentes/initialValues.js';
 import CompleteField from '../componentes/CompleteField.js';
+import ErrorMsg from '../componentes/ErrorMsg.js';
 
 function CrearProducto() {
   let { id, nombre_usuario } = useParams();
@@ -58,15 +59,6 @@ function CrearProducto() {
     });
   }, [id]);
 
-  const toggleCuadro = (fila, columna) => {
-    const nuevaCuadricula = [...cuadrosSeleccionados];
-    nuevaCuadricula.forEach((fila, i) =>
-      fila.forEach((columna, j) => (nuevaCuadricula[i][j] = 0))
-    );
-    nuevaCuadricula[fila][columna] = 1;
-    setCuadrosSeleccionados(nuevaCuadricula);
-  };
-
   const onSubmit = async (data) => {
     try {
       const productoData = {
@@ -103,7 +95,14 @@ function CrearProducto() {
       <div>
         <div className="form-mapa-container">
           <div className="formulario">
-            <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchemaProducto}>
+            <Formik 
+            initialValues={{
+              ...initialValues,
+              GondolaId: gondola || '',  // Usar valor de gondola o una cadena vacía
+              ubicExacta: ubicExacta || '',  // Usar valor de ubicExacta o una cadena vacía
+            }}
+            onSubmit={onSubmit} 
+            validationSchema={validationSchemaProducto}>
               <Form>
                 <div className="form-group">
                   <div className='row'>
@@ -141,6 +140,7 @@ function CrearProducto() {
                     options={ubicOptions}
                     onChange={handleUbic}
                   />
+              
                 </div>
                 <div className='button-container'>
                   <button type="submit" onSubmit={onSubmit} className="guardarButton">
@@ -160,7 +160,6 @@ function CrearProducto() {
               entradax={entradax}
               saliday={saliday}
               salidax={salidax}
-              toggleCuadro={toggleCuadro}
             />
           </div>
         </div>

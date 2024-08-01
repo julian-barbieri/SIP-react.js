@@ -8,6 +8,8 @@ import ListaGondolas from '../componentes/ListaGondolas';
 import Mapa from '../componentes/Mapa';
 import MapTitles from '../componentes/MapTitles';
 
+
+
 function MapaCompleto() {
   const { id, nombre_usuario } = useParams();
   const [cuadrosSeleccionados, setCuadrosSeleccionados] = useState([]);
