@@ -7,12 +7,30 @@ function Mapa({ numLargo, numAncho, gondolas, entraday, entradax, saliday, salid
     Array(numLargo).fill().map(() => Array(numAncho).fill(0))
   );
 
-  const toggleCuadro = (fila, columna) => {
+  const toggleCuadro = (fila, columna, gondolaEnEsteCuadro) => {
+    console.log(columna, fila, gondolaEnEsteCuadro.codigo);
     const nuevaCuadricula = cuadrosSeleccionados.map((filaArray, filaIndex) =>
       filaArray.map((col, colIndex) => (filaIndex === fila && colIndex === columna ? 1 : 0))
     );
     setCuadrosSeleccionados(nuevaCuadricula);
   };
+
+  const renderColumnHeaders = () => (
+    <div className="fila-numeros">
+      {Array.from({ length: numAncho }, (_, i) => (
+        <div key={i} className="numero-columna">{i + 1}</div>
+      ))}
+    </div>
+  );
+
+  const renderRowHeaders = () => (
+    <div className="columna-numeros">
+      {Array.from({ length: numLargo }, (_, i) => (
+        <div key={i} className="numero-fila">{i + 1}</div>
+      ))}
+    </div>
+  );
+  
   const renderCuadros = () => {
     const cuadros = [];
   
@@ -39,16 +57,13 @@ function Mapa({ numLargo, numAncho, gondolas, entraday, entradax, saliday, salid
 
         cuadros.push(
           <div key={`${fila}-${columna}`} className={estiloCuadro}>
-            {gondolaEnEsteCuadro && fila + 1 === gondolaEnEsteCuadro.ubicaciony && columna + 1 === gondolaEnEsteCuadro.ubicacionx && (
-              <div key={gondolaEnEsteCuadro.id} className='idGondola'>{gondolaEnEsteCuadro.codigo}</div>
-            )}
-            <div className='numerosColumna'>{fila === 0 ? `${columna + 1}` : ""} </div>
-            <div className='numerosFila'>{columna === 0 ? `${fila + 1}` : ""}</div>
             <div className='cuadrados'>
               <CuadradoBlanco
+                gondolaCodigo={gondolaEnEsteCuadro && fila + 1 === gondolaEnEsteCuadro.ubicaciony && columna + 1 === gondolaEnEsteCuadro.ubicacionx ? gondolaEnEsteCuadro.codigo : null}
                 className={estiloCuadro}
-                onClick={() => toggleCuadro(fila, columna)}
-              />
+                onClick={() => toggleCuadro(fila, columna, gondolaEnEsteCuadro)}
+              >
+              </ CuadradoBlanco>
             </div>
           </div>
         );
@@ -59,8 +74,18 @@ function Mapa({ numLargo, numAncho, gondolas, entraday, entradax, saliday, salid
   };
 
   return (
-    <div className="cuadricula">
-      {renderCuadros()}
+    <div className="mapa-container">
+      <div className="mapa-header">
+        <div className="fila-numeros-container">
+          {renderColumnHeaders()}
+        </div>
+        <div className="mapa-content">
+          {renderRowHeaders()}
+          <div className="cuadricula">
+            {renderCuadros()}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

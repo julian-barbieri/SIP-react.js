@@ -4,7 +4,7 @@ import '../styles/CreateSuper.css';
 import { Formik, Form } from 'formik';
 import SwalAlert from '../componentes/SwalAlert.js';
 import axiosInstance from '../auth/axiosConfig.js';
-import BackButton from '../componentes/BackButton.js';
+import BackButton from "../componentes/buttons/BackButton.js";
 import Title from '../componentes/Title.js';
 import CompleteField from '../componentes/CompleteField.js';
 import GuardarButton from '../componentes/GuardarButton.js';

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/Button.css';
+import './ButtonWithLogo.css';
 
-const Button = ({ to, text, logo }) => {
+const ButtonWithLogo = ({ to, text, logo }) => {
   return (
     <div className='column'>
       <Link to={to} className='welcome-button'>
@@ -15,4 +15,4 @@ const Button = ({ to, text, logo }) => {
   );
 };
 
-export default Button;
+export default ButtonWithLogo;

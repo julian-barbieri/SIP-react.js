@@ -1,11 +1,10 @@
-/* mapa.css */
+/* MapaCompleto.css */
 
 :root {
   --numAncho: 0;
   --numLargo: 0;
 }
 .cuadricula {
-  margin-bottom: 20px;
   display: grid;
   grid-template-columns: repeat(var(--numAncho), auto);
   grid-template-rows: repeat(var(--numLargo), auto); /* Ancho de las columnas basado en el ancho */
@@ -26,22 +25,15 @@
 .numerosColumna {
   color: black;
   position: relative;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  /*center: 100%; /* Agrega esta línea para mover el texto hacia la izquierda */
-  justify-content: flex-start; /* Para alinear los elementos a la izquierda */
-  flex-direction: column;
+  margin-bottom: 10px;
 
 }
 
 .numerosFila {
   color: black;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: fit-content; /* Para alinear los elementos a la izquierda */
+  padding-right: 12px;
+
 }
 
 .entrada{
@@ -57,7 +49,10 @@
 }
 
 .idGondola {
-  color: blue;
+  color: rgb(255, 255, 255);
   font-weight: bold;
-  width: fit-content;
+  width: auto;
+  position: relative;
+  text-align: center;
+  justify-content: center;
 }

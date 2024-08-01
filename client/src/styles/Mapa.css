@@ -1,9 +1,59 @@
-.cuadricula {
-    background-color: #fff; /* Opcional: fondo blanco para el mapa */
-    border: 1px solid #ddd; /* Opcional: borde para el mapa */
-    border-radius: 8px; /* Opcional: borde redondeado para el mapa */
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Opcional: sombra para el mapa */
-    margin: 0 auto; /* Centrarse dentro del contenedor */
-    max-width: 50%;
-}
+.mapa-container {
+    display: grid;
+    grid-template-columns: auto;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .columna-numeros{
+    display: grid;
+    grid-template-rows: repeat(var(--numLargo), 25px); /* Debe coincidir con el alto de los cuadros */
+    align-content: space-evenly;
+    margin-right: 2px; /* Espacio entre los números y la cuadrícula */
+  }
+  
+  .fila-numeros {
+    display: grid;
+    grid-template-columns: repeat(var(--numAncho), 25px); /* Debe coincidir con el ancho de los cuadros */
+    justify-content: space-around;
+    margin-bottom: 4px; /* Espacio entre los números y la cuadrícula */
+  }
+  
+  .numero-columna {
+    text-align: center;
+    font-weight: bold;
+    width: 25px; /* Debe coincidir con el ancho de los cuadros */
+    line-height: 25px; /* Ajusta la altura de línea para centrar verticalmente */
+  }
+
+  .numero-fila{
+    text-align: center;
+    font-weight: bold;
+    height: 25px; /* Debe coincidir con el alto de los cuadros */
+    line-height: 25px; /* Ajusta la altura de línea para centrar verticalmente */
+  }
+  
+  .cuadricula {
+    display: grid;
+    grid-template-columns: repeat(var(--numAncho), 25px); /* Debe coincidir con el ancho de los cuadros */
+    gap: 4px;
+    justify-content: center;
+  }
+  
+  .cuadro-container {
+    width: 25px; /* Ajustar según sea necesario */
+    height: 25px; /* Ajustar según sea necesario */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .cuadro-container > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mapa-content{
+    display: flex;
+  }
+  

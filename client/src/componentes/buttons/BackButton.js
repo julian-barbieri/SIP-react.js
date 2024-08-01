@@ -1,6 +1,6 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
-import '../styles/BackButton.css';
+import './BackButton.css';
 import { BsArrowLeftCircle } from "react-icons/bs";
 
 function BackButton({to}) {

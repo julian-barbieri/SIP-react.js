@@ -3,11 +3,11 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Formik, Form, ErrorMessage } from 'formik';
 import validationSchemaProducto from '../validations/validationSchemaProducto.js'; 
 import Select from 'react-select';
-import Swal from "sweetalert2";
+import SwalAlert from '../componentes/SwalAlert.js';
 import axiosInstance from '../auth/axiosConfig.js';
 import Title from '../componentes/Title.js';
 import Mapa from '../componentes/Mapa.js';
-import BackButton from "../componentes/BackButton.js";
+import BackButton from "../componentes/buttons/BackButton.js";
 import ubicOptions from "../componentes/ubicOptions.js";
 import '../styles/CrearProducto.css';
 import initialValues from '../componentes/initialValues.js';
@@ -67,13 +67,7 @@ function CrearProducto() {
         GondolaId: gondola,
       };
       await axiosInstance.post(`http://localhost:3001/productos`, productoData);
-      Swal.fire({
-        position: "top",
-        icon: "success",
-        title: "Producto creado",
-        showConfirmButton: true,
-        timer: 2500
-      });
+      SwalAlert('success', 'Producto creado', '');
       navigate(`/welcome/${id}/${nombre_usuario}/producto`);
     } catch (error) {
       console.error(error);

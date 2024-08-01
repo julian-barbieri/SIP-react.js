@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import '../styles/Gondolas.css'; 
 import Swal from 'sweetalert2';
 import axiosInstance from '../auth/axiosConfig.js';
+import BackButton from '../componentes/buttons/BackButton.js';
+import Title from '../componentes/Title.js';
+import Button from '../componentes/buttons/ButtonWithLogo.js';
 
 function Gondolas() {
   
@@ -17,9 +20,6 @@ function Gondolas() {
     });
   }, []);
 
-  const creargondola = async () => {
-    navigate(`/welcome/${id}/${nombre_usuario}/gondolas/crear`);
-  }
 
   const editarGondola = async (gondolaId) => {
     navigate(`/welcome/${id}/${nombre_usuario}/gondolas/${gondolaId}`);
@@ -59,20 +59,11 @@ function Gondolas() {
 
   }
   return (
-    <div className='gondolas-container'>
-      <div className="top-bar">
-        <Link to={`/welcome/${id}/${nombre_usuario}`} className="back-link">
-          Volver
-        </Link>
-      </div>
-      <div className='titulo-gondola'>
-        Góndolas
-      </div>
-      <div className='button-container'>
-        <button className='button-crear-gondola' onClick={creargondola}>
-          Nueva góndola
-        </button>
-      </div>
+    <div>
+      <BackButton to={`/welcome/${id}/${nombre_usuario}`}/>
+      <Title text={"Góndolas"} />
+      <Button  to={`welcome/${id}/${nombre_usuario}/gondolas/crear`} text={"Nueva góndola"} logo={null} />
+      
       <div className='gondola-list' >
         {listOfGondolas.map((value, key) => (
           <div className="gondola" key={key}>

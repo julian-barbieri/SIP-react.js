@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axiosInstance from '../auth/axiosConfig.js';
 import '../styles/MapaCompleto.css';
-import BackButton from '../componentes/BackButton.js';
+import BackButton from "../componentes/buttons/BackButton.js";
 import Title from '../componentes/Title.js';
 import ListaGondolas from '../componentes/ListaGondolas';
 import Mapa from '../componentes/Mapa';
@@ -18,8 +18,8 @@ function MapaCompleto() {
   const [entradax, setEntradax] = useState(5);
   const [saliday, setSaliday] = useState(5);
   const [salidax, setSalidax] = useState(5);
-  const [numAncho, setNumAncho] = useState(10);
-  const [numLargo, setNumLargo] = useState(10);  
+  const [numAncho, setNumAncho] = useState(11);
+  const [numLargo, setNumLargo] = useState(11);  
 
   useEffect(() => {
     axiosInstance.get(`http://localhost:3001/gondolas/${id}`).then((response) => {
@@ -54,7 +54,6 @@ function MapaCompleto() {
       <Mapa
         numLargo={numLargo}
         numAncho={numAncho}
-        cuadrosSeleccionados={cuadrosSeleccionados}
         gondolas={gondolas}
         entraday={entraday}
         entradax={entradax}
