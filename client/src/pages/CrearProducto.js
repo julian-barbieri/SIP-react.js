@@ -96,11 +96,7 @@ function CrearProducto() {
         <div className="form-mapa-container">
           <div className="formulario">
             <Formik 
-            initialValues={{
-              ...initialValues,
-              GondolaId: gondola || '',  // Usar valor de gondola o una cadena vacía
-              ubicExacta: ubicExacta || '',  // Usar valor de ubicExacta o una cadena vacía
-            }}
+            initialValues={initialValues}
             onSubmit={onSubmit} 
             validationSchema={validationSchemaProducto}>
               <Form>
