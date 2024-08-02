@@ -7,9 +7,20 @@
 
 .fila {
   display: flex;
-  align-items: baseline;
-  justify-content: center; /* Alinea elementos al inicio de la fila */
-  width: 15%; /* Asegura que las filas ocupen todo el ancho */
-  max-width: 400px; /* Ajusta esto al tamaño máximo que quieres para el contenido */
+  align-items: center; /* Alinea los elementos en el centro verticalmente */
+  justify-content: center; /* Alinea los elementos al principio de la fila */
+  width: 100%;
+  max-width: 400px; /* Ajusta el tamaño máximo de la fila */
   margin-bottom: 10px;
+  flex-wrap: nowrap; /* Evita que los elementos se envuelvan */
+}
+
+.container-cuadrado {
+  flex: 0 0 auto; /* Evita que el cuadrado se reduzca o crezca */
+}
+
+.fila .label {
+  flex: 1; /* Permite que el texto ocupe el espacio restante */
+  overflow: hidden; /* Opcional: oculta el desbordamiento de texto */
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
 }

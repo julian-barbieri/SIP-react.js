@@ -3,10 +3,12 @@ import '../styles/CuadradoTitulo.css';
 
 function CuadradoTitulo({ className }) {
   const estilo = {
+    display: 'flex',
     width: '15px',
     height: '15px',
     textAlign: 'center',
     justifyContent: 'center',
+    marginRight: '10px',
   };
 
   if (className && className.includes('entrada')) {
