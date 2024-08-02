@@ -1,0 +1,30 @@
+/* src/styles/Searcher.css */
+
+.searcher-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .searcher-input {
+    width: 100%;
+    max-width: 400px; /* Ancho máximo del input */
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease;
+  }
+  
+  .searcher-input:focus {
+    outline: none;
+    border-color: #007bff; /* Color del borde cuando se enfoca el input */
+  }
+  
+  @media (max-width: 600px) {
+    .searcher-input {
+      width: 90%; /* Adaptar el ancho en pantallas pequeñas */
+    }
+  }
+  

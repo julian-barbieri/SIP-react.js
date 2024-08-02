@@ -7,6 +7,7 @@ import BackButton from '../componentes/buttons/BackButton.js';
 import Title from '../componentes/Title.js';
 import Button from '../componentes/buttons/Button.js';
 
+
 function Gondolas() {
   
   let navigate = useNavigate();

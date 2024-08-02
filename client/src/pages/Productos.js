@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import '../styles/Productos.css';
 import Swal from 'sweetalert2';
 import axiosInstance from '../auth/axiosConfig.js';
+import SwalAlert from '../componentes/SwalAlert.js';
+import BackButton from '../componentes/buttons/BackButton.js';
+import Title from '../componentes/Title.js';
+import Button from '../componentes/buttons/Button.js';
+import Searcher from '../componentes/Searcher.js';
 
 function Productos() {
 
@@ -38,13 +43,7 @@ function Productos() {
       // Recargar la lista de productos
       const response = await axiosInstance.get(`http://localhost:3001/productos/bySuper/${id}`);
       setListOfProductos(response.data);
-      Swal.fire({
-        position: "top",
-        icon: "success",
-        title: "Producto eliminado",
-        showConfirmButton: true,
-        timer: 2500
-      });
+      SwalAlert("success", "Producto eliminado", "")
     } catch (error) {
       console.error("Error al actualizar el stock del producto:", error);
       // Manejar errores aquí
@@ -73,15 +72,9 @@ function Productos() {
     navigate(`/welcome/${id}/${nombre_usuario}/producto/${producto_id}`);
   };
   return (
-    <div className='productos-container'>
-      <div className="top-bar">
-        <Link to={`/welcome/${id}/${nombre_usuario}`} className="back-link">
-          Volver
-        </Link>
-      </div>
-      <div className='titulo-producto'>
-        Productos
-      </div>
+    <div>
+      <BackButton to={`/welcome/${id}/${nombre_usuario}`}/>
+      <Title text={"Productos"} />
       {gondola ? 
         <><div className='button-container'>
         <button className='button-crear-producto' onClick={nuevoProducto}>
@@ -89,12 +82,7 @@ function Productos() {
         </button>
       </div>
       <div className='buscar-container'>
-        <input
-          type="text"
-          placeholder="Buscar por nombre"
-          value={busqueda}
-          onChange={(e) => setBusqueda(e.target.value)}
-        />
+        <Searcher busqueda={busqueda} setBusqueda={setBusqueda} />
       </div>
       <div className='producto-list'>
         {productosFiltrados.map((value, key) => (
@@ -119,14 +107,23 @@ function Productos() {
               )}
             </div>
             <div className="producto-buttons">
-              <button className="añadir-button" onClick={() => añadirProducto(value.id)}>Añadir</button>
-              <button className="eliminar-button" onClick={() => eliminarProducto(value.id)}>Eliminar</button>
-              <button className="editar-button" onClick={() => editarProducto(value.id)}>Editar producto</button>
+              <div className='row-button'>
+              <Button onClick={() => añadirProducto(value.id)} text={"Añadir al stock"} className="secondary" />
+              </div>
+              <div className='row-button'>
+              <Button onClick={() => eliminarProducto(value.id)} text={"Eliminar del stock"} className="danger" />
+              </div>
+              <div className='row-button'>
+                <Button onClick={() => editarProducto(value.id)} text={"Editar producto"} className="button" />
+              </div>
             </div>
           </div>
         ))}
       </div></> : 
-        <p>Creá al menos una góndola para crear productos.</p>}
+        <div className='crear-producto-label'>
+          <p>Creá al menos una góndola para crear productos.</p>
+        </div>
+        }
       
     </div>
   )
