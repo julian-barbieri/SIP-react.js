@@ -35,7 +35,7 @@ function CrearProducto() {
       setGondolas(response.data);
       const gondolasOptions = response.data.map((gondola) => ({
         value: gondola.id,
-        label: `${gondola.categoria}`,
+        label: `${gondola.codigo} - ${gondola.categoria}`,
       }));
       setListOfGondolas(gondolasOptions);
     });
