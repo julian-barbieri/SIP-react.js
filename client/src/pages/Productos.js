@@ -31,7 +31,10 @@ function Productos() {
   
   // Filtrar productos basados en la búsqueda
   const productosFiltrados = listOfProductos.filter((producto) =>
-    producto.nombre.toLowerCase().includes(busqueda.toLowerCase())
+    producto.nombre.toLowerCase().includes(busqueda.toLowerCase()) || 
+    producto.marca.toLowerCase().includes(busqueda.toLowerCase()) || 
+    producto.categoria.toLowerCase().includes(busqueda.toLowerCase()) || 
+    producto.subCategoria.toLowerCase().includes(busqueda.toLowerCase())
   );
 
   const nuevoProducto = () => {
@@ -82,7 +85,7 @@ function Productos() {
         </button>
       </div>
       <div className='buscar-container'>
-        <Searcher busqueda={busqueda} setBusqueda={setBusqueda} />
+        <Searcher busqueda={busqueda} setBusqueda={setBusqueda} placeholder={"Buscar por nombre, marca, categoría, subcategoría"}/>
       </div>
       <div className='producto-list'>
         {productosFiltrados.map((value, key) => (

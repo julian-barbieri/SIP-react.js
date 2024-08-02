@@ -6,12 +6,14 @@ import axiosInstance from '../auth/axiosConfig.js';
 import BackButton from '../componentes/buttons/BackButton.js';
 import Title from '../componentes/Title.js';
 import Button from '../componentes/buttons/Button.js';
+import Searcher from '../componentes/Searcher.js';
 
 
 function Gondolas() {
   
   let navigate = useNavigate();
   const [listOfGondolas, setListOfGondolas] = useState([]);
+  const [busqueda, setBusqueda] = useState('');
 
   let { id } = useParams();
   let { nombre_usuario } = useParams();
@@ -21,6 +23,10 @@ function Gondolas() {
     });
   }, []);
 
+  // Filtrar productos basados en la búsqueda por categoria
+  const gondolasFiltrados = listOfGondolas.filter((gondola) =>
+    gondola.categoria.toLowerCase().includes(busqueda.toLowerCase())
+  );
 
   const editarGondola = async (gondolaId) => {
     navigate(`/welcome/${id}/${nombre_usuario}/gondolas/${gondolaId}`);
@@ -66,16 +72,19 @@ function Gondolas() {
       <div className="button-container">
         <Button to={`/welcome/${id}/${nombre_usuario}/gondolas/crear`} text={"Nueva góndola"} className="primary" />
       </div>
+      <div className='buscar-container'>
+        <Searcher busqueda={busqueda} setBusqueda={setBusqueda} placeholder={"Buscar por categoria"} />
+      </div>
       <div className='gondola-list'>
-        {listOfGondolas.map((value, key) => (
+        {gondolasFiltrados.map((value, key) => (
           <div className="gondola" key={key}>
             <div className="gondola-info">
               <div className="gondola-codigo">{value.codigo}</div>
               <div className="gondola-categoria">{value.categoria}</div>
             </div>
             <div className="gondola-buttons">
-              <Button className="secondary editar-button" text="Editar" onClick={() => editarGondola(value.id)} />
-              <Button className="danger eliminar-button" text="Eliminar" onClick={() => eliminarGondola(value.id, value.categoria)} />
+              <Button className="secondary" text="Editar" onClick={() => editarGondola(value.id)} />
+              <Button className="danger" text="Eliminar" onClick={() => eliminarGondola(value.id, value.categoria)} />
             </div>
           </div>
         ))}

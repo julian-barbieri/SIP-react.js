@@ -3,12 +3,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../styles/Searcher.css'; // Puedes añadir un archivo CSS para estilos específicos
 
-const Searcher = ({ busqueda, setBusqueda }) => {
+const Searcher = ({ busqueda, setBusqueda, placeholder }) => {
   return (
     <div className="searcher-container">
       <input
         type="text"
-        placeholder="Buscar por nombre"
+        placeholder={placeholder}
         value={busqueda}
         onChange={(e) => setBusqueda(e.target.value)}
         className="searcher-input"

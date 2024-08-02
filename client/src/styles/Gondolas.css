@@ -1,73 +1,43 @@
-.gondolas-container {
-    text-align: center;
-    padding: 20px;
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    margin: 0 auto;
-    margin-top: 20px;
-  }
-  
-  .button-container {
-    margin-bottom: 20px;
-  }
-  
-  .button-crear-gondola {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .gondola-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .gondola {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 4px;
-  }
-  
-  .gondola-info {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .gondola-codigo {
-    font-size: 18px;
-  }
-  
-  .gondola-categoria {
-    font-size: 14px;
-    color: #777;
-  }
-  
-  .gondola-buttons button {
-    background-color: #007bff;
-    color: #fff;
-    padding: 5px 10px;
-    margin-left: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .gondola-buttons button.editar-button {
-    background-color: #28a745;
-  }
-  
-  .gondola-buttons button.eliminar-button {
-    background-color: #dc3545;
-  }
-  
+.button-container {
+  margin-bottom: 20px;
+}
+
+.gondola-list {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan */
+  justify-content: space-between; /* Espacio entre las columnas */
+  max-width: 700px; /* Ajuste para dos columnas */
+  margin: 0 auto; /* Centrar el contenedor */
+}
+
+.gondola {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 5px 5px;
+  border-radius: 4px;
+  flex: 1 1 calc(40% - 10px); /* Dos columnas con espacio entre ellas */
+  box-sizing: border-box; /* Asegura que el padding y el border se incluyan en el tamaño total */
+  min-width: 300px; /* Ancho mínimo para mantener consistencia */
+}
+
+.gondola-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.gondola-codigo {
+  font-size: 18px;
+}
+
+.gondola-categoria {
+  font-size: 14px;
+  color: #777;
+}
+
+.gondola-buttons {
+  padding: 5px 10px;
+  margin-left: 10px;
+}
