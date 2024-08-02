@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import axiosInstance from '../auth/axiosConfig.js';
 import BackButton from '../componentes/buttons/BackButton.js';
 import Title from '../componentes/Title.js';
-import Button from '../componentes/buttons/ButtonWithLogo.js';
+import Button from '../componentes/buttons/Button.js';
 
 function Gondolas() {
   
@@ -62,9 +62,10 @@ function Gondolas() {
     <div>
       <BackButton to={`/welcome/${id}/${nombre_usuario}`}/>
       <Title text={"Góndolas"} />
-      <Button  to={`welcome/${id}/${nombre_usuario}/gondolas/crear`} text={"Nueva góndola"} logo={null} />
-      
-      <div className='gondola-list' >
+      <div className="button-container">
+        <Button to={`/welcome/${id}/${nombre_usuario}/gondolas/crear`} text={"Nueva góndola"} className="primary" />
+      </div>
+      <div className='gondola-list'>
         {listOfGondolas.map((value, key) => (
           <div className="gondola" key={key}>
             <div className="gondola-info">
@@ -72,8 +73,8 @@ function Gondolas() {
               <div className="gondola-categoria">{value.categoria}</div>
             </div>
             <div className="gondola-buttons">
-              <button className="editar-button" onClick={()=>editarGondola(value.id)}>Editar</button>
-              <button className="eliminar-button" onClick={()=>eliminarGondola(value.id, value.categoria)}>Eliminar</button>
+              <Button className="secondary editar-button" text="Editar" onClick={() => editarGondola(value.id)} />
+              <Button className="danger eliminar-button" text="Eliminar" onClick={() => eliminarGondola(value.id, value.categoria)} />
             </div>
           </div>
         ))}
