@@ -80,10 +80,8 @@ function Productos() {
       <Title text={"Productos"} />
       {gondola ? 
         <><div className='button-container'>
-        <button className='button-crear-producto' onClick={nuevoProducto}>
-          Nuevo producto
-        </button>
-      </div>
+          <Button className="primary" text={"Nuevo producto"} onClick={nuevoProducto} />
+        </div>
       <div className='buscar-container'>
         <Searcher busqueda={busqueda} setBusqueda={setBusqueda} placeholder={"Buscar por nombre, marca, categoría, subcategoría"}/>
       </div>

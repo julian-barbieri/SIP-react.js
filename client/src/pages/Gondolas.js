@@ -23,6 +23,10 @@ function Gondolas() {
     });
   }, []);
 
+  const nuevaGondola = () => {
+    navigate(`/welcome/${id}/${nombre_usuario}/gondolas/crear`)
+  }
+
   // Filtrar productos basados en la búsqueda por categoria
   const gondolasFiltrados = listOfGondolas.filter((gondola) =>
     gondola.categoria.toLowerCase().includes(busqueda.toLowerCase())
@@ -70,7 +74,7 @@ function Gondolas() {
       <BackButton to={`/welcome/${id}/${nombre_usuario}`}/>
       <Title text={"Góndolas"} />
       <div className="button-container">
-        <Button to={`/welcome/${id}/${nombre_usuario}/gondolas/crear`} text={"Nueva góndola"} className="primary" />
+        <Button onClick={nuevaGondola} text={"Nueva góndola"} className="primary" />
       </div>
       <div className='buscar-container'>
         <Searcher busqueda={busqueda} setBusqueda={setBusqueda} placeholder={"Buscar por categoria"} />
