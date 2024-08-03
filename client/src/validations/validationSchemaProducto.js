@@ -7,8 +7,8 @@ const validationSchemaProducto = Yup.object().shape({
     subCategoria: Yup.string().required("Campo obligatorio"),
     descuento: Yup.number().min(0).required("Campo obligatorio"),
     precioUnidad: Yup.number().min(0.01).required("Campo obligatorio"),
-    GondolaId: Yup.string().required("Debes seleccionar una góndola"),
-    ubicExacta: Yup.string().required("Debes seleccionar una ubicación exacta")
+    GondolaId: Yup.string().required('Selecciona una góndola'),
+    ubicExacta: Yup.string().required('Selecciona la ubicación exacta'),
 });
 
 export default validationSchemaProducto;

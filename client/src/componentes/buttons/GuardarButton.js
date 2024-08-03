@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/GuardarButton.css';
+import './GuardarButton.css';
 
 function GuardarButton() {
     return(

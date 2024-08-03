@@ -7,7 +7,7 @@ import axiosInstance from '../auth/axiosConfig.js';
 import BackButton from "../componentes/buttons/BackButton.js";
 import Title from '../componentes/Title.js';
 import CompleteField from '../componentes/CompleteField.js';
-import GuardarButton from '../componentes/GuardarButton.js';
+import GuardarButton from '../componentes/buttons/GuardarButton.js';
 import initialValues from '../componentes/initialValues.js';
 import validationSchemaSuper from '../validations/validationSchemaSuper.js';
 

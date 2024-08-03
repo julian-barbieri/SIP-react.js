@@ -9,7 +9,7 @@ import SwalAlert from '../componentes/SwalAlert.js';
 import BackButton from '../componentes/buttons/BackButton.js';
 import initialValuesGondola from '../initialValues/initialValuesGondola.js';
 import CompleteField from '../componentes/CompleteField.js';
-import GuardarButton from '../componentes/GuardarButton.js';
+import GuardarButton from '../componentes/buttons/GuardarButton.js';
 
 function CrearGondola() {
     let navigate = useNavigate();

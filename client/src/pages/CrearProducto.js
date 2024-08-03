@@ -12,16 +12,16 @@ import ubicOptions from "../componentes/ubicOptions.js";
 import '../styles/CrearProducto.css';
 import initialValues from '../componentes/initialValues.js';
 import CompleteField from '../componentes/CompleteField.js';
-import ErrorMsg from '../componentes/ErrorMsg.js';
+import GuardarButton from '../componentes/buttons/GuardarButton.js';
 
 function CrearProducto() {
   let { id, nombre_usuario } = useParams();
   let navigate = useNavigate();
 
   const [listOfGondolas, setListOfGondolas] = useState([]);
-  const [gondola, setGondola] = useState();
+  const [gondola, setGondola] = useState(null);
   const [gondolas, setGondolas] = useState([]);
-  const [ubicExacta, setUbicExacta] = useState();
+  const [ubicExacta, setUbicExacta] = useState(null);
   const [cuadrosSeleccionados, setCuadrosSeleccionados] = useState([]);
   const [numAncho, setNumAncho] = useState(10);
   const [numLargo, setNumLargo] = useState(10);  
@@ -38,6 +38,7 @@ function CrearProducto() {
         label: `${gondola.codigo} - ${gondola.categoria}`,
       }));
       setListOfGondolas(gondolasOptions);
+      
     });
 
     axiosInstance.get(`http://localhost:3001/supermercados/superById/${id}`).then((response) => {
@@ -63,8 +64,8 @@ function CrearProducto() {
     try {
       const productoData = {
         ...data,
-        ubicExacta: ubicExacta,
-        GondolaId: gondola,
+        ubicExacta: ubicExacta ? ubicExacta.value : '',
+        GondolaId: gondola ? gondola.value : '',
       };
       await axiosInstance.post(`http://localhost:3001/productos`, productoData);
       SwalAlert('success', 'Producto creado', '');
@@ -72,14 +73,6 @@ function CrearProducto() {
     } catch (error) {
       console.error(error);
     }
-  };
-
-  const handleGondola = (selectedOption) => {
-    setGondola(selectedOption.value);
-  };
-
-  const handleUbic = (selectedOption) => {
-    setUbicExacta(selectedOption.value);
   };
 
   return (
@@ -93,6 +86,7 @@ function CrearProducto() {
             initialValues={initialValues}
             onSubmit={onSubmit} 
             validationSchema={validationSchemaProducto}>
+              {({ setFieldValue }) => (
               <Form>
                 <div className="form-group">
                   <div className='row'>
@@ -112,32 +106,36 @@ function CrearProducto() {
                   </div>
                 </div>
                 <div className="form-group">
-                  <ErrorMessage name="GondolaId" component="span" />
-                  <Select
-                    id="GondolaId"
-                    className="inputField"
-                    name="GondolaId"
+                  
+                  <Select 
+                    id="GondolaId" 
+                    name="GondolaId" 
+                    placeholder="Selecciona una góndola" 
                     options={listOfGondolas}
-                    onChange={handleGondola}
-                    placeholder="Selecciona una góndola"
+                    onChange={(selectedOption) => {
+                      setFieldValue('GondolaId', selectedOption.value);
+                      setGondola(selectedOption);
+                    }}
+                    value={gondola}
                   />
-                  <ErrorMessage name="ubicExacta" component="span" />
-                  <Select
-                    id="ubicExacta"
-                    className="inputField"
-                    name="ubicExacta"
-                    placeholder="Selecciona la ubicación exacta"
+                  <ErrorMessage name="GondolaId" component="span" className="error-message" />
+                  <Select 
+                    id="ubicExacta" 
+                    name="ubicExacta" 
+                    placeholder="Selecciona la ubicación exacta" 
                     options={ubicOptions}
-                    onChange={handleUbic}
+                    onChange={(selectedOption) => {
+                      setFieldValue('ubicExacta', selectedOption.value);
+                      setUbicExacta(selectedOption);
+                    }}
+                    value={ubicExacta}
                   />
+                  <ErrorMessage name="ubicExacta" component="span" className="error-message" />
               
                 </div>
-                <div className='button-container'>
-                  <button type="submit" onSubmit={onSubmit} className="guardarButton">
-                    Guardar
-                  </button>
-                </div>
+                <GuardarButton />
               </Form>
+              )}
             </Formik>
           </div>
           <div className="mapa">
