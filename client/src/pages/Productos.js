@@ -38,7 +38,7 @@ function Productos() {
   );
 
   const nuevoProducto = () => {
-    navigate(`/welcome/${id}/${nombre_usuario}/producto/crear`)
+    navigate(`/welcome/${id}/${nombre_usuario}/producto/form`)
   }
   const eliminarProducto = async (producto_id) => {
     try {

@@ -1,8 +1,9 @@
 const ubicOptions = [
-    { value: 'arriba', label: 'Arriba' },
-    { value: 'abajo', label: 'Abajo' },
-    { value: 'derecha', label: 'Derecha' },
-    { value: 'izquierda', label: 'Izquierda' }
+    { value: '', key: 'Seleccioná la ubicación exacta'},
+    { value: 'arriba', key: 'Arriba' },
+    { value: 'abajo', key: 'Abajo' },
+    { value: 'derecha', key: 'Derecha' },
+    { value: 'izquierda', key: 'Izquierda' }
 ]
 
 export default ubicOptions;

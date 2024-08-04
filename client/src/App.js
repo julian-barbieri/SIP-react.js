@@ -10,8 +10,7 @@ import EntradaSalida from './pages/EntradaSalida';
 import Welcome from './pages/Welcome';
 import MapaCompleto from './pages/MapaCompleto';
 import Productos from './pages/Productos';
-import CrearProducto from './pages/CrearProducto';
-import EditarProducto from './pages/EditarProducto';
+import ProductoForm from './pages/ProductoForm.js';
 import EditarGondola from './pages/EditarGondola';
 import UbicProducto from './pages/UbicProducto';
 import Gondolas from './pages/Gondolas';
@@ -79,13 +78,11 @@ function App() {
               <Productos />
             </RutaProtegida>
           } />
-          <Route path='/welcome/:id/:nombre_usuario/producto/crear' element={
-              <CrearProducto />
+          <Route path='/welcome/:id/:nombre_usuario/producto/form' element={
+            <ProductoForm />
           } />
           <Route path='/welcome/:id/:nombre_usuario/producto/:producto_id' element={
-            <RutaProtegida>
-              <EditarProducto />
-            </RutaProtegida>
+            <ProductoForm />
           } />
           <Route path='/welcome/:id/:nombre_usuario/producto/crear/ubic' element={
             <RutaProtegida>

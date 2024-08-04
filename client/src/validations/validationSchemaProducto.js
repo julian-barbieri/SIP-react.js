@@ -1,14 +1,15 @@
 import * as Yup from 'yup';
 
 const validationSchemaProducto = Yup.object().shape({
-    nombre: Yup.string().required("Campo obligatorio"),
-    marca: Yup.string().required("Campo obligatorio"),
-    categoria: Yup.string().min(3).max(15).required("Campo obligatorio"),
-    subCategoria: Yup.string().required("Campo obligatorio"),
-    descuento: Yup.number().min(0).required("Campo obligatorio"),
-    precioUnidad: Yup.number().min(0.01).required("Campo obligatorio"),
-    GondolaId: Yup.string().required('Selecciona una góndola'),
-    ubicExacta: Yup.string().required('Selecciona la ubicación exacta'),
+    nombre: Yup.string().required('El nombre es requerido'),
+    marca: Yup.string().required('La marca es requerida'),
+    categoria: Yup.string().required('La categoría es requerida'),
+    subCategoria: Yup.string().required('La subcategoría es requerida'),
+    precioUnidad: Yup.number().required('El precio es requerido').positive('Debe ser un número positivo'),
+    descuento: Yup.number().min(0, 'No puede ser negativo').max(100, 'No puede exceder el 100%'),
+    stock: Yup.boolean().required('El stock es requerido'),
+    GondolaId: Yup.string().required('Debes seleccionar una góndola'),
+    ubicExacta: Yup.string().required('Debes seleccionar una ubicación exacta'),
 });
 
 export default validationSchemaProducto;
