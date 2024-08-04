@@ -128,7 +128,8 @@ function ProductoForm() {
             enableReinitialize
             initialValues={values}
             onSubmit={onSubmit} 
-            validationSchema={validationSchemaProducto}>
+            validationSchema={validationSchemaProducto}
+            >
 
               <Form>
                 <div className="form-group">
@@ -162,7 +163,7 @@ function ProductoForm() {
                     </option>
                   ))}
                 </Field>
-                <ErrorMessage name="ubicExacta" component="span" />
+                <ErrorMessage name="ubicExacta" component="span" className="error-message"/>
                 <Field
                   as="select"
                   id="GondolaId"
@@ -176,7 +177,7 @@ function ProductoForm() {
                     </option>
                   ))}
                 </Field>
-                <ErrorMessage name="GondolaId" component="span" />
+                <ErrorMessage name="GondolaId" component="span" className="error-message"/>
                 </div>
                 <GuardarButton />
               </Form>

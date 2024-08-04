@@ -6,7 +6,6 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import HomeSuper from './pages/HomeSuper';
 import CreateSuper from './pages/CreateSuper';
-import EntradaSalida from './pages/EntradaSalida';
 import Welcome from './pages/Welcome';
 import MapaCompleto from './pages/MapaCompleto';
 import Productos from './pages/Productos';
@@ -36,11 +35,6 @@ function App() {
           <Route path='/app/:nombre_usuario/createSuper' element={
             <RutaProtegida>
               <CreateSuper />
-            </RutaProtegida>
-          } />
-          <Route path='/homeSuper/:nombre_usuario/createSuper/entradasalida/:ancho/:largo' element={
-            <RutaProtegida>
-              <EntradaSalida />
             </RutaProtegida>
           } />
           <Route path='/welcome/:id/:nombre_usuario' element={

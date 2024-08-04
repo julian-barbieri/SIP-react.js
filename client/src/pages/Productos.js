@@ -46,7 +46,7 @@ function Productos() {
       // Recargar la lista de productos
       const response = await axiosInstance.get(`http://localhost:3001/productos/bySuper/${id}`);
       setListOfProductos(response.data);
-      SwalAlert("success", "Producto eliminado", "")
+      SwalAlert("success", "Producto eliminado del stock", "")
     } catch (error) {
       console.error("Error al actualizar el stock del producto:", error);
       // Manejar errores aquí
@@ -59,13 +59,7 @@ function Productos() {
       // Recargar la lista de productos
       const response = await axios.get(`http://localhost:3001/productos/bySuper/${id}`);
       setListOfProductos(response.data);
-      Swal.fire({
-        position: "top",
-        icon: "success",
-        title: "Producto añadido",
-        showConfirmButton: true,
-        timer: 2500
-      });
+      SwalAlert("success", "Producto añadido al stock", "")
     } catch (error) {
       console.error("Error al actualizar el stock del producto:", error);
       // Manejar errores aquí
