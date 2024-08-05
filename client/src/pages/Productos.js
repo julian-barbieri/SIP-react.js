@@ -109,7 +109,7 @@ function Productos() {
               <Button onClick={() => eliminarProducto(value.id)} text={<AiOutlineDelete size={22}/>} className="danger" />
               </div>
               <div className='row-button'>
-                <Button onClick={() => editarProducto(value.id)} text={<AiFillEdit size={22}/>} className="button" />
+                <Button onClick={() => editarProducto(value.id)} text={"h"} className="button" />
               </div>
             </div>
           </div>
