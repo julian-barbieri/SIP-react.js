@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../styles/Productos.css';
-import Swal from 'sweetalert2';
 import axiosInstance from '../auth/axiosConfig.js';
 import SwalAlert from '../componentes/SwalAlert.js';
 import BackButton from '../componentes/buttons/BackButton.js';
 import Title from '../componentes/Title.js';
 import Button from '../componentes/buttons/Button.js';
 import Searcher from '../componentes/Searcher.js';
+import { AiOutlineDelete, AiFillEdit, AiOutlinePlusCircle } from "react-icons/ai";
 
 function Productos() {
 
@@ -103,13 +103,13 @@ function Productos() {
             </div>
             <div className="producto-buttons">
               <div className='row-button'>
-              <Button onClick={() => añadirProducto(value.id)} text={"Añadir al stock"} className="secondary" />
+              <Button onClick={() => añadirProducto(value.id)} text={<AiOutlinePlusCircle size={22}/>} className="secondary" />
               </div>
               <div className='row-button'>
-              <Button onClick={() => eliminarProducto(value.id)} text={"Eliminar del stock"} className="danger" />
+              <Button onClick={() => eliminarProducto(value.id)} text={<AiOutlineDelete size={22}/>} className="danger" />
               </div>
               <div className='row-button'>
-                <Button onClick={() => editarProducto(value.id)} text={"Editar producto"} className="button" />
+                <Button onClick={() => editarProducto(value.id)} text={<AiFillEdit size={22}/>} className="button" />
               </div>
             </div>
           </div>

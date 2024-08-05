@@ -61,7 +61,7 @@
 
 .producto-buttons {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   color: #fff;
   margin-left: 10px;
   margin-bottom: 10px;

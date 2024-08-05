@@ -20,24 +20,26 @@
   border-radius: 4px;
   flex: 1 1 calc(40% - 10px); /* Dos columnas con espacio entre ellas */
   box-sizing: border-box; /* Asegura que el padding y el border se incluyan en el tamaño total */
-  min-width: 300px; /* Ancho mínimo para mantener consistencia */
+  min-width: 320px; /* Ancho mínimo para mantener consistencia */
 }
 
 .gondola-info {
   display: flex;
   flex-direction: column;
-}
-
-.gondola-codigo {
-  font-size: 18px;
+  margin-right: 20px;
 }
 
 .gondola-categoria {
+  font-size: 18px;
+}
+
+.gondola-codigo {
   font-size: 14px;
   color: #777;
 }
 
 .gondola-buttons {
+  display: flex;
   padding: 5px 10px;
   margin-left: 10px;
 }

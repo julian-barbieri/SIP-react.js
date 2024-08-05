@@ -7,6 +7,8 @@ import BackButton from '../componentes/buttons/BackButton.js';
 import Title from '../componentes/Title.js';
 import Button from '../componentes/buttons/Button.js';
 import Searcher from '../componentes/Searcher.js';
+import { AiOutlineDelete, AiFillEdit } from "react-icons/ai";
+
 
 
 function Gondolas() {
@@ -83,12 +85,12 @@ function Gondolas() {
         {gondolasFiltrados.map((value, key) => (
           <div className="gondola" key={key}>
             <div className="gondola-info">
-              <div className="gondola-codigo">{value.codigo}</div>
               <div className="gondola-categoria">{value.categoria}</div>
+              <div className="gondola-codigo">ID: {value.codigo}</div>
             </div>
             <div className="gondola-buttons">
-              <Button className="secondary" text="Editar" onClick={() => editarGondola(value.id)} />
-              <Button className="danger" text="Eliminar" onClick={() => eliminarGondola(value.id, value.categoria, value.codigo)} />
+              <Button className="secondary" text={<AiFillEdit size={20}/>} onClick={() => editarGondola(value.id)} />
+              <Button className="danger" text={<AiOutlineDelete size={20}/>} onClick={() => eliminarGondola(value.id, value.categoria, value.codigo)} />
             </div>
           </div>
         ))}
