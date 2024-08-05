@@ -86,6 +86,7 @@ function ProductoForm() {
           ubicExacta: producto.ubicExacta,
         });
       }).catch(error => {
+        SwalAlert('error', 'Error al obtener los detalles del producto', '');
         console.error("Error al obtener los detalles del producto:", error);
       });
     }

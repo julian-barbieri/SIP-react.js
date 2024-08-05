@@ -24,7 +24,7 @@ function Gondolas() {
   }, []);
 
   const nuevaGondola = () => {
-    navigate(`/welcome/${id}/${nombre_usuario}/gondolas/crear`)
+    navigate(`/welcome/${id}/${nombre_usuario}/gondolas/crear`);
   }
 
   // Filtrar productos basados en la búsqueda por categoria
@@ -35,7 +35,7 @@ function Gondolas() {
   const editarGondola = async (gondolaId) => {
     navigate(`/welcome/${id}/${nombre_usuario}/gondolas/${gondolaId}`);
   }
-  const eliminarGondola = async (gondolaId, categoria) =>{
+  const eliminarGondola = async (gondolaId, categoria, codigo) =>{
     Swal.fire({
       title: "Advertencia",
       text: "Eliminar la góndola implica que se eliminarán los productos que se encuentran dentro de ella!",
@@ -53,7 +53,7 @@ function Gondolas() {
           // Recargar la lista de gondolas
           Swal.fire({
             title: "Eliminada!",
-            text: `La góndola ${gondolaId} de ${categoria} fue eliminada con exito!`,
+            text: `La góndola ${codigo} de ${categoria} fue eliminada con exito!`,
             icon: "success"
           }).then((result) => {
             if(result.isConfirmed || result.isDismissed){
@@ -88,7 +88,7 @@ function Gondolas() {
             </div>
             <div className="gondola-buttons">
               <Button className="secondary" text="Editar" onClick={() => editarGondola(value.id)} />
-              <Button className="danger" text="Eliminar" onClick={() => eliminarGondola(value.id, value.categoria)} />
+              <Button className="danger" text="Eliminar" onClick={() => eliminarGondola(value.id, value.categoria, value.codigo)} />
             </div>
           </div>
         ))}

@@ -10,11 +10,8 @@ import Welcome from './pages/Welcome';
 import MapaCompleto from './pages/MapaCompleto';
 import Productos from './pages/Productos';
 import ProductoForm from './pages/ProductoForm.js';
-import EditarGondola from './pages/EditarGondola';
-import UbicProducto from './pages/UbicProducto';
 import Gondolas from './pages/Gondolas';
-import CrearGondola from './pages/CrearGondola';
-import UbicGondola from './pages/UbicGondola';
+import GondolaForm from './pages/GondolaForm';
 
 function App() {
    
@@ -49,17 +46,12 @@ function App() {
           } />
           <Route path='/welcome/:id/:nombre_usuario/gondolas/crear' element={
             <RutaProtegida>
-              <CrearGondola />
+              <GondolaForm />
             </RutaProtegida>
           } />
           <Route path='/welcome/:id/:nombre_usuario/gondolas/:gondola_id' element={
             <RutaProtegida>
-              <EditarGondola />
-            </RutaProtegida>
-          } />
-          <Route path='/welcome/:id/:nombre_usuario/gondolas/crear/ubic' element={
-            <RutaProtegida>
-              <UbicGondola />
+              <GondolaForm />
             </RutaProtegida>
           } />
           <Route path='/welcome/:id/:nombre_usuario/mapa' element={
@@ -73,14 +65,13 @@ function App() {
             </RutaProtegida>
           } />
           <Route path='/welcome/:id/:nombre_usuario/producto/form' element={
-            <ProductoForm />
+            <RutaProtegida>
+              <ProductoForm />
+            </RutaProtegida>
           } />
           <Route path='/welcome/:id/:nombre_usuario/producto/:producto_id' element={
-            <ProductoForm />
-          } />
-          <Route path='/welcome/:id/:nombre_usuario/producto/crear/ubic' element={
             <RutaProtegida>
-              <UbicProducto />
+              <ProductoForm />
             </RutaProtegida>
           } />
           {/* Ruta por defecto */}
