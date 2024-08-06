@@ -11,6 +11,11 @@
   margin-top: 20px;
 }
 
+.delete-button-container{
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
 .lista-gondolas-container {
   flex: 1; /* Ocupa el espacio disponible a la derecha */
 }

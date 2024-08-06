@@ -86,7 +86,7 @@ function Productos() {
       if (result.isConfirmed) {
         try{
           axiosInstance.delete(`http://localhost:3001/productos/${productoId}`);
-          SwalAlert('error', 'Eliminada!', `El producto ${nombre} de marca ${marca} fue eliminado con exito!`);
+          SwalAlert('success', 'Eliminada!', `El producto ${nombre} de marca ${marca} fue eliminado con exito!`);
           // Recargar la lista de gondolas
           window.location.reload();
 
