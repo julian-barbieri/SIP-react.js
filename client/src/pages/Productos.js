@@ -8,7 +8,9 @@ import BackButton from '../componentes/buttons/BackButton.js';
 import Title from '../componentes/Title.js';
 import Button from '../componentes/buttons/Button.js';
 import Searcher from '../componentes/Searcher.js';
-import { AiOutlineDelete, AiFillEdit, AiOutlinePlusCircle } from "react-icons/ai";
+import { AiOutlineDelete } from "react-icons/ai";
+import Swal from 'sweetalert2';
+import { FaBan, FaClipboardCheck  } from "react-icons/fa";
 
 function Productos() {
 
@@ -40,7 +42,7 @@ function Productos() {
   const nuevoProducto = () => {
     navigate(`/welcome/${id}/${nombre_usuario}/producto/form`)
   }
-  const eliminarProducto = async (producto_id) => {
+  const eliminarStock = async (producto_id) => {
     try {
       await axiosInstance.put(`http://localhost:3001/productos/${producto_id}/eliminarstock`);
       // Recargar la lista de productos
@@ -68,6 +70,35 @@ function Productos() {
   const editarProducto = async (producto_id) => {
     navigate(`/welcome/${id}/${nombre_usuario}/producto/${producto_id}`);
   };
+
+  const eliminarProducto = async (productoId, nombre, marca) =>{
+    Swal.fire({
+      title: "Advertencia",
+      text: "Eliminar el producto implica que no se volverá a recuperar su información.",
+      icon: "warning",
+      showCancelButton: true,
+      showCloseButton:true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Eliminar producto",
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        try{
+          axiosInstance.delete(`http://localhost:3001/productos/${productoId}`);
+          SwalAlert('error', 'Eliminada!', `El producto ${nombre} de marca ${marca} fue eliminado con exito!`);
+          // Recargar la lista de gondolas
+          window.location.reload();
+
+        } catch(err){
+          // Manejo de errores aquí
+          SwalAlert('error', 'Producto no eliminado', '');
+          console.error(err);
+        }
+      }
+    });
+
+  }
   return (
     <div>
       <BackButton to={`/welcome/${id}/${nombre_usuario}`}/>
@@ -81,7 +112,7 @@ function Productos() {
       </div>
       <div className='producto-list'>
         {productosFiltrados.map((value, key) => (
-          <div className="producto" key={key}>
+          <div className="producto" onClick={() => editarProducto(value.id)} key={key}>
             <div className="producto-info">
               <div className="producto-nombre">{value.nombre}</div>
               <div className="producto-marca">{value.marca}</div>
@@ -101,15 +132,27 @@ function Productos() {
                 </div>
               )}
             </div>
-            <div className="producto-buttons">
+            <div className="producto-buttons" onClick={(e) => e.stopPropagation()}>
               <div className='row-button'>
-              <Button onClick={() => añadirProducto(value.id)} text={<AiOutlinePlusCircle size={22}/>} className="secondary" />
+                <Button 
+                  onClick={() => añadirProducto(value.id)} 
+                  text={<FaClipboardCheck  size={22}/>} 
+                  className="secondary" 
+                />
               </div>
               <div className='row-button'>
-              <Button onClick={() => eliminarProducto(value.id)} text={<AiOutlineDelete size={22}/>} className="danger" />
+                <Button 
+                  onClick={() => eliminarStock(value.id)} 
+                  text={<FaBan size={22}/>} 
+                  className="warning" 
+                />
               </div>
               <div className='row-button'>
-                <Button onClick={() => editarProducto(value.id)} text={<AiFillEdit size={22}/>} className="button" />
+                <Button 
+                  onClick={() => eliminarProducto(value.id, value.nombre, value.marca)} 
+                  text={<AiOutlineDelete size={22}/>} 
+                  className="danger" 
+                />
               </div>
             </div>
           </div>

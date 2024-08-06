@@ -112,4 +112,23 @@ router.post("/", authenticateJWT, async (req, res) =>{
     res.json(Producto);
 });
 
+//delete producto
+
+router.delete("/:id", async (req, res) => {
+  try {
+      const productoId = req.params.id;
+      const producto = await Productos.findByPk(productoId);
+      
+      if (!producto) {
+          return res.status(404).json({ error: "Producto no encontrado" });
+      }
+      
+      await producto.destroy(); // Eliminar el producto de la base de datos
+      res.status(204).send(); // Enviar una respuesta vacía con el código de estado 204 (No Content)
+  } catch (error) {
+      console.error("Error al eliminar el producto por ID:", error);
+      res.status(500).json({ error: "Error del servidor" });
+  }
+});
+
 module.exports = router

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../styles/Gondolas.css'; 
 import Swal from 'sweetalert2';
+import SwalAlert from '../componentes/SwalAlert.js';
 import axiosInstance from '../auth/axiosConfig.js';
 import BackButton from '../componentes/buttons/BackButton.js';
 import Title from '../componentes/Title.js';
@@ -53,18 +54,12 @@ function Gondolas() {
         try{
           axiosInstance.delete(`http://localhost:3001/gondolas/${gondolaId}`);
           // Recargar la lista de gondolas
-          Swal.fire({
-            title: "Eliminada!",
-            text: `La góndola ${codigo} de ${categoria} fue eliminada con exito!`,
-            icon: "success"
-          }).then((result) => {
-            if(result.isConfirmed || result.isDismissed){
-              window.location.reload();
-            }
-          })
+          SwalAlert('success', 'Eliminada!', `La góndola ${codigo} de ${categoria} fue eliminada con exito!`);
+          window.location.reload();
 
         } catch(err){
           // Manejo de errores aquí
+          SwalAlert('error', 'Góndola no eliminada', '');
           console.error(err);
         }
       }

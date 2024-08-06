@@ -31,4 +31,12 @@
   .button.danger:hover {
     background-color: #c82333;
   }
+
+  .button.warning {
+    background-color: #e3520f;
+  }
+  
+  .button.warning:hover {
+    background-color: #c85223;
+  }
   

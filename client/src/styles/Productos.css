@@ -30,6 +30,8 @@
   width: calc(50% - 10px); /* Ajuste para dos columnas con espacio */
   min-width: 300px; /* Ancho mínimo para todos los productos */
   box-sizing: border-box; /* Asegura que padding y border no influyan en el ancho */
+  background-color: #1d9a833d;
+  cursor: pointer;
 }
 
 .producto-info {

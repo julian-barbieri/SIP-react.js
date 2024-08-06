@@ -49,19 +49,24 @@ function MapaCompleto() {
       <BackButton to={`/welcome/${id}/${nombre_usuario}`} />
       <Title text={"Mapa del Supermercado"} />
 
-      <MapTitles />
-
-      <Mapa
-        numLargo={numLargo}
-        numAncho={numAncho}
-        gondolas={gondolas}
-        entraday={entraday}
-        entradax={entradax}
-        saliday={saliday}
-        salidax={salidax}
-      />
-
-      <ListaGondolas gondolas={gondolas} />
+      <div className="mapa-completo-container">
+        <div className="mapa-container">
+          <MapTitles />
+          <Mapa
+            numLargo={numLargo}
+            numAncho={numAncho}
+            gondolas={gondolas}
+            entraday={entraday}
+            entradax={entradax}
+            saliday={saliday}
+            salidax={salidax}
+          />
+        </div>
+        
+        <div className="lista-gondolas-container">
+          <ListaGondolas gondolas={gondolas} />
+        </div>
+      </div>
     </div>
   );
 }

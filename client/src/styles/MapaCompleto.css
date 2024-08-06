@@ -1,5 +1,20 @@
 /* MapaCompleto.css */
 
+.mapa-completo-container {
+  display: flex;
+  gap: 20px; /* Espacio entre el mapa y la lista de góndolas */
+}
+
+.mapa-container {
+  flex: 1; /* Ocupa el espacio disponible a la izquierda */
+  align-content: flex-start;
+  margin-top: 20px;
+}
+
+.lista-gondolas-container {
+  flex: 1; /* Ocupa el espacio disponible a la derecha */
+}
+
 :root {
   --numAncho: 0;
   --numLargo: 0;
