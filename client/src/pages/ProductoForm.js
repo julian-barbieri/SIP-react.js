@@ -33,8 +33,8 @@ function ProductoForm() {
     subCategoria: "",
     descuento: 0,
     stock: true,
-    GondolaId: " ",
-    ubicExacta: " ",
+    GondolaId: "",
+    ubicExacta: "",
   });
 
 
@@ -164,7 +164,7 @@ function ProductoForm() {
                     </option>
                   ))}
                 </Field>
-                <ErrorMessage name="ubicExacta" component="span" className="error-message"/>
+                <ErrorMessage name="ubicExacta" component="span" />
                 <Field
                   as="select"
                   id="GondolaId"
@@ -178,7 +178,7 @@ function ProductoForm() {
                     </option>
                   ))}
                 </Field>
-                <ErrorMessage name="GondolaId" component="span" className="error-message"/>
+                <ErrorMessage name="GondolaId" component="span"/>
                 </div>
                 <GuardarButton />
               </Form>
